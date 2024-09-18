@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { router } from "../App/Routes";
 import { toast } from "react-toastify";
+import { LogPageFilterParamsDto } from "../DTOs/LogPageFilterParamsDto";
 
 axios.defaults.baseURL = 'http://localhost:5009/api/';
 axios.defaults.withCredentials = true;
@@ -37,17 +38,17 @@ axios.interceptors.response.use(async response => {
 });
 
 const requests = {
-    get: (url: string) => axios.get(url).then(responseBody),
+    get: (url: string, params?: URLSearchParams) => axios.get(url, { params }).then(responseBody),
     post: (url: string, body: object) => axios.post(url, body).then(responseBody),
     put: (url: string, body: object) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody),
 }
 
-// const App = {
-//     initState: () => requests.get(`App/InitState`),
-//     technologies: () => requests.get(`App/Technologies`),
-//     tops: (amount: number) => requests.get(`statistics/tops?topAmount=${amount}`),
-// }
+const Log = {
+    page: (filter: URLSearchParams) => requests.get(`log`, filter),
+    // technologies: () => requests.get(`App/Technologies`),
+    // tops: (amount: number) => requests.get(`statistics/tops?topAmount=${amount}`),
+}
 
 // const Test = {
 //     initiateNewTest: (technologyName: string) => requests.post(`test/initiate-new-test?techName=${technologyName}`, {}),
@@ -64,7 +65,8 @@ const Account = {
 }
 
 const http = {
-    Account
+    Account,
+    Log
 }
 
 export default http;

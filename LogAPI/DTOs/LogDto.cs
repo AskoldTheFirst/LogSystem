@@ -11,9 +11,23 @@ namespace LogAPI.DTOs
 
         public LogDto(Log dbLog)
         {
+            Product = dbLog.ProductId;
+            Severity = dbLog.Severity;
+            DT = dbLog.LogDTServer;
+            Message = dbLog.Message;
+            Username = dbLog.Username;
+            RequestCtx = dbLog.RequestCtx;
+            EnvironmentCtx = dbLog.EnvironmentCtx;
+            Browser = dbLog.Browser;
+            IpAddress = dbLog.IpAddress;
+            Exception = dbLog.Exception;
+            LayerType = dbLog.LayerType;
+            Tag1 = dbLog.Tag1;
+            Tag2 = dbLog.Tag2;
+            Tag3 = dbLog.Tag3;
         }
 
-        public Product ProductId { get; set; }
+        public Product Product { get; set; }
 
         public Severity Severity { get; set; }
 
@@ -44,7 +58,7 @@ namespace LogAPI.DTOs
         public Log ToDbEntity()
         {
             return new Log {
-                ProductId = ProductId,
+                ProductId = Product,
                 Severity = Severity,
                 LogDTClient = DT,
                 Message = Message,

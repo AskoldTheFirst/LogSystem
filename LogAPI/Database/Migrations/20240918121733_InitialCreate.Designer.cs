@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogAPI.Database.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    [Migration("20240916175436_InitialCreate")]
+    [Migration("20240918121733_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,9 +44,6 @@ namespace LogAPI.Database.Migrations
 
                     b.Property<string>("IpAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsMarked")
-                        .HasColumnType("bit");
 
                     b.Property<int>("LayerType")
                         .HasColumnType("int");
@@ -96,9 +93,6 @@ namespace LogAPI.Database.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsMarked")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LogDTClient")
                         .HasColumnType("datetime2");
@@ -227,13 +221,13 @@ namespace LogAPI.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "31d10b68-468f-43be-981c-92e787f46656",
+                            Id = "1b8ac1d8-9eb7-4d9b-9d61-f5f927f3f71d",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "5e2dc1b3-f0c4-4909-818f-0d9af8c5718b",
+                            Id = "232d1455-9a7b-4a3a-b314-46336f27356e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

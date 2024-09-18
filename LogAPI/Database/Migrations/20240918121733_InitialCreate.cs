@@ -72,8 +72,7 @@ namespace LogAPI.Database.Migrations
                     LayerType = table.Column<int>(type: "int", nullable: false),
                     Tag1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tag2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tag3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsMarked = table.Column<bool>(type: "bit", nullable: false)
+                    Tag3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,8 +93,7 @@ namespace LogAPI.Database.Migrations
                     SessionId = table.Column<long>(type: "bigint", nullable: false),
                     Tag1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tag2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tag3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsMarked = table.Column<bool>(type: "bit", nullable: false)
+                    Tag3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,8 +211,8 @@ namespace LogAPI.Database.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "31d10b68-468f-43be-981c-92e787f46656", null, "Member", "MEMBER" },
-                    { "5e2dc1b3-f0c4-4909-818f-0d9af8c5718b", null, "Admin", "ADMIN" }
+                    { "1b8ac1d8-9eb7-4d9b-9d61-f5f927f3f71d", null, "Member", "MEMBER" },
+                    { "232d1455-9a7b-4a3a-b314-46336f27356e", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

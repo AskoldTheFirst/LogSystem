@@ -7,20 +7,22 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { GlobalCtx } from './App';
+import { useContext } from 'react';
+import SignedInMenu from './SignedInMenu';
 
 const pages = [
-    {title: 'Log', path: '/logs'},
-    {title: 'Trace', path: '/traces'},
-    {title: 'Statistics', path: '/statistics'},
+    { title: 'Log', path: '/logs' },
+    { title: 'Trace', path: '/traces' },
+    { title: 'Statistics', path: '/statistics' },
 ];
 
 function ResponsiveAppBar() {
+    const [user] = useContext(GlobalCtx);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -122,18 +124,22 @@ function ResponsiveAppBar() {
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button
-                            component={NavLink}
-                            to="/login"
-                            key="login"
-                            sx={{ my: 1, color: 'white', display: 'block', fontSize: 12 }}
-                        >
-                            LOGIN
-                        </Button>
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                        {user !== null ? (
+                            <SignedInMenu />
+                        ): (
+                            <Button
+                                component = { NavLink }
+                                to = "/login"
+                                key = "login"
+                                sx = {{ my: 1, color: 'white', display: 'block', fontSize: 12 }}
+                            >
+                                LOGIN
+                            </Button>
+                        )}
+                </Box>
+            </Toolbar>
+        </Container>
+        </AppBar >
     );
 }
 export default ResponsiveAppBar;

@@ -485,3 +485,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 API/appsettings.json
+client/tsconfig.app.tsbuildinfo
+client/tsconfig.node.tsbuildinfo

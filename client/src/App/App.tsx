@@ -1,16 +1,23 @@
-import { Container, CssBaseline } from '@mui/material'
+import { Container } from '@mui/material'
 import Header from './Header'
 import { Outlet } from 'react-router-dom'
+import { createContext, useState } from 'react';
+import { UserDto } from '../DTOs/UserDto';
+
+export const GlobalCtx = createContext();
 
 function App() {
+  const [user, setUser] = useState<UserDto | null>(null);
 
   return (
     <>
-      {/* <CssBaseline /> */}
-      <Header />
-      <Container>
-        <Outlet />
-      </Container>
+      <GlobalCtx.Provider value={[user, setUser ]}>
+        {/* <CssBaseline /> */}
+        <Header />
+        <Container>
+          <Outlet />
+        </Container>
+      </GlobalCtx.Provider>
     </>
   )
 }

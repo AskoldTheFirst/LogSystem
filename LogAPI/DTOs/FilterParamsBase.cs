@@ -8,12 +8,10 @@ namespace LogAPI.DTOs
 
         public int PageSize { get; set; } = 30;
 
-        public Product[] Products { get; set; }
+        public Product Product { get; set; }
 
         public string MessageSearchTerm { get; set; }
 
-        public bool ShowMarkedOnly { get; set; }
-
-        public Period Period { get; set; }
+        public string UserSearchTerm { get; set; }
     }
 }

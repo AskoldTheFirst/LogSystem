@@ -1,6 +1,7 @@
 export enum Products {
+    All = 0,
     Tester = 1,
     PF = 2,
-    FCS = 4,
-    All = Tester | PF | FCS
+    FCS = 3,
+    LogSystem = 4,
   }

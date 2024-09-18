@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-//import { store } from "../App/configureStore";
 import { router } from "../App/Routes";
 import { toast } from "react-toastify";
 
@@ -9,9 +8,11 @@ axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.request.use(config => {
-    let token;
-    //const token = store.getState().account.user?.token;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    
+    const token = localStorage.getItem('user');
+    if (token)
+        config.headers.Authorization = `Bearer ${token}`;
+
     return config;
 });
 
@@ -24,7 +25,7 @@ axios.interceptors.response.use(async response => {
         case 400:
         case 401:
         case 404:
-            toast.error(data.title);
+            toast.error(data?.title);
             break;
         case 500:
             router.navigate('/server-error', { state: { error: data } });

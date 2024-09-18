@@ -68,8 +68,8 @@ app.UseCors(opt =>
         .AllowAnyMethod()
         .AllowCredentials()
         .WithOrigins(new[] {
-            "http://localhost:3004",
-            "http://127.0.0.1:3004"
+            "http://localhost:3006",
+            "http://127.0.0.1:3006"
         });
 });
 
@@ -77,5 +77,18 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<LogDbContext>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+try
+{
+    await context.Database.MigrateAsync();
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "A problem occurred during migrations.");
+}
 
 app.Run();

@@ -1,4 +1,3 @@
-import { Period } from "./Period";
 import { Products } from "./Products";
 
 export interface FilterParams {
@@ -6,6 +5,4 @@ export interface FilterParams {
     pageSize: number;
     products: Products;
     messageSearchTerm: string;
-    showMarkedOnly: boolean;
-    period: Period;
 }

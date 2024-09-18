@@ -14,11 +14,11 @@ namespace LogAPI.Controllers
         {
         }
 
-        [HttpGet]
-        public async Task<ActionResult<TraceDto[]>> Traces(TraceFilterParams param)
-        {
-            return new TraceDto[0];
-        }
+        // [HttpGet]
+        // public async Task<ActionResult<TraceDto[]>> Traces(TraceFilterParams param)
+        // {
+        //     return new TraceDto[0];
+        // }
 
         //[HttpPost]
         //public async Task<ActionResult> WriteLog(TraceDto trace)

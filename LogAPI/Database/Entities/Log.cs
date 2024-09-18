@@ -43,9 +43,5 @@ namespace LogAPI.Database.Entities
         public string Tag2 { get; set; }
 
         public string Tag3 { get; set; }
-
-        [DefaultValue(0)]
-        [Required]
-        public bool IsMarked { get; set; }
     }
 }

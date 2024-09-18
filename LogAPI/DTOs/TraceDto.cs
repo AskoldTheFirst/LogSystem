@@ -4,7 +4,9 @@ namespace LogAPI.DTOs
 {
     public class TraceDto
     {
-        public Product ProductId { get; set; }
+        public int Id { get; set; }
+        
+        public Product Product { get; set; }
 
         public string Message { get; set; }
 

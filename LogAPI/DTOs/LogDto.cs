@@ -13,7 +13,7 @@ namespace LogAPI.DTOs
         {
             Product = dbLog.ProductId;
             Severity = dbLog.Severity;
-            DT = dbLog.LogDTServer;
+            DT = dbLog.LogDTServer.ToString("dd-MM-yy hh:ss");
             Message = dbLog.Message;
             Username = dbLog.Username;
             RequestCtx = dbLog.RequestCtx;
@@ -31,7 +31,7 @@ namespace LogAPI.DTOs
 
         public Severity Severity { get; set; }
 
-        public DateTime DT { get; set; }
+        public string DT { get; set; }
 
         public string Message { get; set; }
 
@@ -60,7 +60,7 @@ namespace LogAPI.DTOs
             return new Log {
                 ProductId = Product,
                 Severity = Severity,
-                LogDTClient = DT,
+                LogDTClient = DateTime.Parse(DT),
                 Message = Message,
                 Username = Username,
                 RequestCtx = RequestCtx,

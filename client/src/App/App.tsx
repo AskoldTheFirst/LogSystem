@@ -14,7 +14,7 @@ function App() {
       <GlobalCtx.Provider value={[user, setUser ]}>
         {/* <CssBaseline /> */}
         <Header />
-        <Container>
+        <Container sx={{marginTop: 4}}>
           <Outlet />
         </Container>
       </GlobalCtx.Provider>

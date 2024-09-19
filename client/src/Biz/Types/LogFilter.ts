@@ -5,7 +5,7 @@ import { Severity } from "./Severity";
 export interface LogFilter {
     messageSearchTerm: string;
     userSearchTerm: string;
-    products: Products;
+    product: Products;
     severity: Severity;
     layerType: LayerType;
 }

@@ -8,6 +8,7 @@ using LogAPI.DTOs;
 using LogAPI.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using LogAPI.Types;
 
 namespace LogAPI.Controllers
 {
@@ -46,19 +47,19 @@ namespace LogAPI.Controllers
             return Ok();
         }
 
-        public static IQueryable<Log> ApplyFilterWhere(IQueryable<Log> query, LogFilterParams param)
+        public static IQueryable<Database.Entities.Log> ApplyFilterWhere(IQueryable<Database.Entities.Log> query, LogFilterParams param)
         {
-            if (param.LayerType != Types.LayerType.All)
+            if (param.LayerType != LayerType.All)
             {
                 query = query.Where(x => x.LayerType == param.LayerType);
             }
 
-            if (param.Severity != Types.Severity.All)
+            if (param.Severity != Severity.All)
             {
                 query = query.Where(x => x.Severity == param.Severity);
             }
 
-            if (param.Product != Types.Product.All)
+            if (param.Product != Product.All)
             {
                 query = query.Where(x => x.ProductId == param.Product);
             }

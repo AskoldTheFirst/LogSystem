@@ -4,18 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logger
+namespace LogClient
 {
-    public interface ILogger
+    public interface ITracer
     {
-        Task LogAsync();
-
         Task TraceAsync();
 
         void WriteTraceToMemoryBuffer();
 
         Task FlushTraceMemoryBufferAsync();
-
-        string GenerateJavaScriptLoggerObject();
     }
 }

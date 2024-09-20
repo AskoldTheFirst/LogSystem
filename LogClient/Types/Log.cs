@@ -1,25 +1,14 @@
-
-using System.ComponentModel.DataAnnotations;
-using LogAPI.Types;
-
-namespace LogAPI.Database.Entities
+﻿
+namespace LogClient.Types
 {
     public class Log
     {
-        public int Id { get; set; }
+        public Product Product { get; set; }
 
-        public Product ProductId { get; set; }
-
-        [Required]
         public Severity Severity { get; set; }
 
-        [Required]
-        public DateTime LogDTServer { get; set; }
+        public string DT { get; set; }
 
-        [Required]
-        public DateTime LogDTClient { get; set; }
-
-        [Required]
         public string Message { get; set; }
 
         public string Username { get; set; }
@@ -34,7 +23,6 @@ namespace LogAPI.Database.Entities
 
         public string Exception { get; set; }
 
-        [Required]
         public LayerType LayerType { get; set; }
 
         public string Tag1 { get; set; }

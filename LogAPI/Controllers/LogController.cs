@@ -9,6 +9,7 @@ using LogAPI.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using LogAPI.Types;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LogAPI.Controllers
 {
@@ -18,6 +19,7 @@ namespace LogAPI.Controllers
         {
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PageDto<LogDto>>> Logs([FromQuery] LogFilterParams param)
         {
@@ -39,6 +41,7 @@ namespace LogAPI.Controllers
             };
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> WriteLog(LogDto log)
         {

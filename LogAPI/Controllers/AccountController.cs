@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using LogAPI.Services;
 using LogAPI.Database.Entities;
 using LogAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LogAPI.Controllers
 {
@@ -30,6 +31,7 @@ namespace LogAPI.Controllers
             _tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -45,6 +47,7 @@ namespace LogAPI.Controllers
             };
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
@@ -67,6 +70,7 @@ namespace LogAPI.Controllers
             return StatusCode(201);
         }
 
+        [Authorize]
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurentUser()
         {

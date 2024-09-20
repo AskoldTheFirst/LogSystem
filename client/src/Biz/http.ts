@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { router } from "../App/Routes";
 import { toast } from "react-toastify";
-import { LogPageFilterParamsDto } from "../DTOs/LogPageFilterParamsDto";
 
 axios.defaults.baseURL = 'http://localhost:5009/api/';
 axios.defaults.withCredentials = true;
@@ -9,11 +8,13 @@ axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.request.use(config => {
+    const user = localStorage.getItem('user');
+    if (user)
+    {
+        const userDto = JSON.parse(user);
+        config.headers.Authorization = `Bearer ${userDto.token}`;
+    }
     
-    const token = localStorage.getItem('user');
-    if (token)
-        config.headers.Authorization = `Bearer ${token}`;
-
     return config;
 });
 
@@ -46,17 +47,7 @@ const requests = {
 
 const Log = {
     page: (filter: URLSearchParams) => requests.get(`log`, filter),
-    // technologies: () => requests.get(`App/Technologies`),
-    // tops: (amount: number) => requests.get(`statistics/tops?topAmount=${amount}`),
 }
-
-// const Test = {
-//     initiateNewTest: (technologyName: string) => requests.post(`test/initiate-new-test?techName=${technologyName}`, {}),
-//     answer: (testId: number, questionId: number, answerNumber: number) => requests.post(`test/answer?testId=${testId}&questionId=${questionId}&answerNumber=${answerNumber}`, {}),
-//     nextQuestion: (testId: number) => requests.get(`test/next-question?testId=${testId}`),
-//     result: (testId: number) => requests.get(`test/test-result?testId=${testId}`),
-//     complete: (testId: number) => requests.put(`test/complete-test?testId=${testId}`, {})
-// }
 
 const Account = {
     login: (values: any) => requests.post('account/login', values),

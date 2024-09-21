@@ -2,9 +2,10 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, FormControl, FormLabel, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { GlobalCtx } from "../../App/App";
 import http from "../../Biz/http";
 import { useNavigate } from "react-router-dom";
+import { AppState } from "../../Biz/Types/AppState";
+import { Ctx } from "../../App/App";
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');
@@ -13,7 +14,7 @@ export default function Login() {
     const [passwordValid, setPasswordValid] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [user, setUser] = useContext(GlobalCtx);
+    const { setUser } = useContext<AppState>(Ctx);
     const navigate = useNavigate();
 
     async function submitForm(event: any) {
@@ -31,12 +32,12 @@ export default function Login() {
                 username: login,
                 password: password
             })
-            .then(retValue => {
-                localStorage.setItem('user', JSON.stringify(retValue));
-                setUser(retValue);
-                navigate('/logs');
-            })
-            .finally(() => setLoading(false));
+                .then(retValue => {
+                    localStorage.setItem('user', JSON.stringify(retValue));
+                    setUser && setUser(retValue);
+                    navigate('/logs');
+                })
+                .finally(() => setLoading(false));
         }
     }
 

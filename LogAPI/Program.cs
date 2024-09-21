@@ -17,9 +17,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+string connectionString = null;
+#if DEBUG
+    connectionString = builder.Configuration.GetConnectionString("DevelopmentDbConnection");
+#else
+    connectionString = builder.Configuration.GetConnectionString("ProductionDbConnection");
+#endif
+
 builder.Services.AddDbContext<LogDbContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(connectionString);
 });
 
 builder.Services.AddCors();
@@ -67,10 +74,10 @@ app.UseCors(opt =>
     opt.AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()
-        .WithOrigins(new[] {
+        .WithOrigins([
             "http://localhost:3006",
             "http://127.0.0.1:3006"
-        });
+        ]);
 });
 
 app.UseHttpsRedirection();
@@ -80,11 +87,13 @@ app.MapControllers();
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<LogDbContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
 {
     await context.Database.MigrateAsync();
+    await DbInitializer.InitializeAsync(userManager);
 }
 catch (Exception ex)
 {

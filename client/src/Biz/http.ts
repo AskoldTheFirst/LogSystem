@@ -2,16 +2,18 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { router } from "../App/Routes";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = 'http://localhost:5009/api/';
+//axios.defaults.baseURL = 'http://localhost:5009/api/';
+//axios.defaults.baseURL = 'http://askold-001-site1.ltempurl.com/api/';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.request.use(config => {
-    const user = localStorage.getItem('user');
-    if (user)
+    const storageUser = localStorage.getItem('user');
+    if (storageUser)
     {
-        const userDto = JSON.parse(user);
+        const userDto = JSON.parse(storageUser);
         config.headers.Authorization = `Bearer ${userDto.token}`;
     }
     
@@ -46,7 +48,7 @@ const requests = {
 }
 
 const Log = {
-    page: (filter: URLSearchParams) => requests.get(`log`, filter),
+    page: (filter: any) => requests.get(`log`, filter),
 }
 
 const Account = {

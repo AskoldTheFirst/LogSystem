@@ -11,9 +11,10 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
-import { GlobalCtx } from './App';
 import { useContext } from 'react';
 import SignedInMenu from './SignedInMenu';
+import { AppState } from '../Biz/Types/AppState';
+import { Ctx } from './App';
 
 const pages = [
     { title: 'Log', path: '/logs' },
@@ -22,7 +23,7 @@ const pages = [
 ];
 
 function ResponsiveAppBar() {
-    const [user] = useContext(GlobalCtx);
+    const { user } = useContext<AppState>(Ctx);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -126,19 +127,19 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         {user !== null ? (
                             <SignedInMenu />
-                        ): (
+                        ) : (
                             <Button
-                                component = { NavLink }
-                                to = "/login"
-                                key = "login"
-                                sx = {{ my: 1, color: 'white', display: 'block', fontSize: 12 }}
+                                component={NavLink}
+                                to="/login"
+                                key="login"
+                                sx={{ my: 1, color: 'white', display: 'block', fontSize: 12 }}
                             >
                                 LOGIN
                             </Button>
                         )}
-                </Box>
-            </Toolbar>
-        </Container>
+                    </Box>
+                </Toolbar>
+            </Container>
         </AppBar >
     );
 }

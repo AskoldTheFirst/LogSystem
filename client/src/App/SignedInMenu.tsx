@@ -1,9 +1,10 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useContext } from "react";
-import { GlobalCtx } from "./App";
+import { AppState } from "../Biz/Types/AppState";
+import { Ctx } from "./App";
 
 export default function SignedInMenu() {
-    const [user, setUser] = useContext(GlobalCtx);
+    const { user, setUser } = useContext<AppState>(Ctx);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -21,7 +22,7 @@ export default function SignedInMenu() {
                 onClick={handleClick}
                 sx={{ typography: 'h6', fontSize: 12 }}
             >
-                {user.login + ' - ' + user.email}
+                {user?.login + ' - ' + user?.email}
             </Button>
             <Menu
                 anchorEl={anchorEl}
@@ -30,7 +31,7 @@ export default function SignedInMenu() {
             >
                 <MenuItem onClick={() => {
                     localStorage.removeItem('user');
-                    setUser(null);
+                    setUser && setUser(null);
                     handleClose();
                 }}>
                     Logout

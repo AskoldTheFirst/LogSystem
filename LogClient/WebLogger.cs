@@ -55,11 +55,19 @@ namespace LogClient
 
                 string json = JsonSerializer.Serialize(newLog);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                await _httpClient.PostAsync("/api/Log", stringContent).ConfigureAwait(false);
+                HttpResponseMessage msg = await _httpClient.PostAsync("/api/Log", stringContent).ConfigureAwait(false);
+
+                #if DEBUG
+                    Console.WriteLine(msg.Content);
+                #endif
             }
-            catch
+            catch(Exception ex)
             {
                 // just to swallow the exception.
+
+                #if DEBUG
+                    Console.WriteLine(ex.Message);
+                #endif
             }
         }
 

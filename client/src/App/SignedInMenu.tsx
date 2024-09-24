@@ -2,9 +2,11 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useContext } from "react";
 import { AppState } from "../Biz/Types/AppState";
 import { Ctx } from "./App";
+import { useNavigate } from "react-router-dom";
 
 export default function SignedInMenu() {
     const { user, setUser } = useContext<AppState>(Ctx);
+    const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -33,6 +35,7 @@ export default function SignedInMenu() {
                     localStorage.removeItem('user');
                     setUser && setUser(null);
                     handleClose();
+                    navigate('/login');
                 }}>
                     Logout
                 </MenuItem>

@@ -96,7 +96,8 @@ namespace LogClient
 
         public string GenerateJavaScriptLoggerObject()
         {
-            return "window.document = {}";
+            
+            return "";
         }
     }
 }

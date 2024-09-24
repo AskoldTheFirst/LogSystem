@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import '@fontsource/roboto/300.css';
@@ -9,8 +8,10 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom';
 import { router } from './App/Routes.tsx';
 
+// TODO: can we createContext() here? At least for using in http.
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // TODO: why to use StrictMode?
+  // <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  //</StrictMode>,
 )

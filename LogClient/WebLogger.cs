@@ -23,7 +23,7 @@ namespace LogClient
         public async Task LogAsync(
             string message,
             Severity severity,
-            string exception,
+            Exception exception,
             string user,
             string requestContext,
             string environmentContect,
@@ -35,11 +35,14 @@ namespace LogClient
         {
             try
             {
+                
+
+                string processedException = ProcessException(exception);
                 Log newLog = new()
                 {
                     Message = message,
                     Severity = severity,
-                    Exception = exception,
+                    Exception = processedException,
                     Username = user,
                     Browser = browser,
                     IpAddress = ipAddress,
@@ -74,7 +77,7 @@ namespace LogClient
         public async Task LogAsync(
             string message,
             Severity severity,
-            string exception)
+            Exception exception)
         {
             await LogAsync(message, severity, exception, null, null, null).ConfigureAwait(false);
         }
@@ -98,6 +101,30 @@ namespace LogClient
         {
             
             return "";
+        }
+
+        private static string ProcessException(Exception ex)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Message: ");
+            sb.Append(ex.Message);
+            sb.AppendLine();
+
+            if (ex.StackTrace != null)
+            {
+                sb.AppendLine("StackTrace: ");
+                sb.Append(ex.StackTrace);
+                sb.AppendLine();
+            }
+            
+            if (ex.InnerException != null)
+            {
+                sb.AppendLine("Inner exception: ");
+                sb.Append(ProcessException(ex.InnerException));
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
     }
 }

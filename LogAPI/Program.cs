@@ -78,8 +78,9 @@ app.UseCors(opt =>
             "http://localhost:3006",
             "http://127.0.0.1:3006",
             "http://localhost:3004",
-            "http://127.0.0.1:3005",
-            "http://askold-001-site2.atempurl.com"
+            "http://127.0.0.1:3004",
+            "http://askold-001-site2.atempurl.com",
+            "http://askold-001-site3.atempurl.com",
         ]);
 });
 

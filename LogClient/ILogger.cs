@@ -12,12 +12,12 @@ namespace LogClient
         Task LogAsync(
             string message,
             Severity severity,
-            string exception);
+            Exception exception);
 
         Task LogAsync(
             string message,
             Severity severity,
-            string exception,
+            Exception exception,
             string user,
             string requestContext,
             string environmentContect,

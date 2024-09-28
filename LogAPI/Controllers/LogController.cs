@@ -28,7 +28,7 @@ namespace LogAPI.Controllers
             
             int skipAmount = (param.PageNumber - 1) * param.PageSize;
 
-            LogDto[] selectedRows = await (from q in query orderby q.LogDTServer descending select new LogDto(q))
+            LogDto[] selectedRows = await (from q in query orderby q.dtServer descending select new LogDto(q))
                         .Skip(skipAmount)
                         .Take(param.PageSize).ToArrayAsync();
 

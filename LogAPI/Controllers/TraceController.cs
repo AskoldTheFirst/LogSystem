@@ -8,6 +8,7 @@ using LogAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using LogAPI.Types;
 using Microsoft.EntityFrameworkCore;
+using LogAPI.Database.Entities;
 
 namespace LogAPI.Controllers
 {
@@ -44,6 +45,18 @@ namespace LogAPI.Controllers
         public async Task<ActionResult> WriteTrace(TraceDto trace)
         {
             _ctx.Traces.Add(trace.ToDbEntity());
+            await _ctx.SaveChangesAsync();
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("traces")]
+        public async Task<ActionResult> WriteTraces(TraceDto[] traces)
+        {
+            Trace[] dbEntities = new Trace[traces.Length];
+            Parallel.For(0, traces.Length, (i) => dbEntities[i] = traces[i].ToDbEntity());
+
+            _ctx.Traces.AddRange(dbEntities);
             await _ctx.SaveChangesAsync();
             return Ok();
         }

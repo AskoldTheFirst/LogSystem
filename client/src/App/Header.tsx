@@ -43,7 +43,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/logs"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -112,13 +112,13 @@ function ResponsiveAppBar() {
                     >
                         LOG-View
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: '30px' }}>
                         {pages.map((item) => (
                             <Button
                                 component={NavLink}
                                 key={item.title}
                                 to={item.path}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={{ my: 2, color: 'white', display: 'block', textAlign: 'center', marginLeft: '8px' }}
                             >
                                 {item.title}
                             </Button>

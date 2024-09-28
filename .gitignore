@@ -488,3 +488,4 @@ $RECYCLE.BIN/
 API/appsettings.json
 client/tsconfig.app.tsbuildinfo
 client/tsconfig.node.tsbuildinfo
+LogAPI/appsettings.json

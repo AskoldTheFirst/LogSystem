@@ -21,7 +21,7 @@ namespace LogAPI.Database
                     new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" }
                 );
 
-            builder.Entity<Log>().Property(c => c.LogDTServer).HasDefaultValueSql("getdate()");
+            builder.Entity<Log>().Property(c => c.dtServer).HasDefaultValueSql("getdate()");
         }
 
         public DbSet<Log> Logs { get; set; }

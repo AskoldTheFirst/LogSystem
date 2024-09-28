@@ -10,7 +10,7 @@ namespace LogAPI.DTOs
             Product = dbTrace.ProductId;
             Message = dbTrace.Message;
             Username = dbTrace.Username;
-            DT = dbTrace.LogDTClient;
+            Date = dbTrace.Date;
             Ticks = dbTrace.Ticks;
             SessionId = dbTrace.SessionId;
             Tag1 = dbTrace.Tag1;
@@ -24,11 +24,11 @@ namespace LogAPI.DTOs
 
         public string Username { get; set; }
 
-        public DateTime DT { get; set; }
+        public DateTime Date { get; set; }
 
-        public long Ticks { get; set; }
+        public long? Ticks { get; set; }
 
-        public long SessionId { get; set; }
+        public long? SessionId { get; set; }
 
         public string Tag1 { get; set; }
 
@@ -42,7 +42,7 @@ namespace LogAPI.DTOs
                 ProductId = Product,
                 Message = Message,
                 Username = Username,
-                LogDTClient = DT,
+                Date = Date,
                 Ticks = Ticks,
                 SessionId = SessionId,
                 Tag1 = Tag1,

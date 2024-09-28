@@ -14,10 +14,10 @@ namespace LogAPI.Database.Entities
         public Severity Severity { get; set; }
 
         [Required]
-        public DateTime LogDTServer { get; set; }
+        public DateTime dtServer { get; set; }
 
         [Required]
-        public DateTime LogDTClient { get; set; }
+        public DateTime dtClient { get; set; }
 
         [Required]
         public string Message { get; set; }

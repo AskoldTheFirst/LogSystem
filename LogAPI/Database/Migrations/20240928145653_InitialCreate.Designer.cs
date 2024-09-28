@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogAPI.Database.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    [Migration("20240918121733_InitialCreate")]
+    [Migration("20240928145653_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,14 +48,6 @@ namespace LogAPI.Database.Migrations
                     b.Property<int>("LayerType")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LogDTClient")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LogDTServer")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getdate()");
-
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -81,6 +73,14 @@ namespace LogAPI.Database.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("dtClient")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dtServer")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
                     b.HasKey("Id");
 
                     b.ToTable("Logs");
@@ -94,7 +94,7 @@ namespace LogAPI.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("LogDTClient")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
@@ -104,7 +104,7 @@ namespace LogAPI.Database.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<long>("SessionId")
+                    b.Property<long?>("SessionId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Tag1")
@@ -116,7 +116,7 @@ namespace LogAPI.Database.Migrations
                     b.Property<string>("Tag3")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Ticks")
+                    b.Property<long?>("Ticks")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Username")
@@ -221,13 +221,13 @@ namespace LogAPI.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1b8ac1d8-9eb7-4d9b-9d61-f5f927f3f71d",
+                            Id = "0bc9d25a-2ed5-4cd6-9172-bb85b814d065",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "232d1455-9a7b-4a3a-b314-46336f27356e",
+                            Id = "8e9d3a8b-3bba-4da1-bf70-dd33c554fcaf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

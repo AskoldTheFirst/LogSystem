@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace LogClient
 {
-    public class WebLogger : ILogger, ITracer
+    public sealed class WebLogger : ILogger
     {
         readonly HttpClient _httpClient;
 
@@ -35,8 +35,6 @@ namespace LogClient
         {
             try
             {
-                
-
                 string processedException = ProcessException(exception);
                 Log newLog = new()
                 {
@@ -58,11 +56,7 @@ namespace LogClient
 
                 string json = JsonSerializer.Serialize(newLog);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage msg = await _httpClient.PostAsync("/api/Log", stringContent).ConfigureAwait(false);
-
-                #if DEBUG
-                    Console.WriteLine(msg.Content);
-                #endif
+                await _httpClient.PostAsync("/api/Log", stringContent).ConfigureAwait(false);
             }
             catch(Exception ex)
             {
@@ -80,21 +74,6 @@ namespace LogClient
             Exception exception)
         {
             await LogAsync(message, severity, exception, null, null, null).ConfigureAwait(false);
-        }
-
-        public Task TraceAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteTraceToMemoryBuffer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task FlushTraceMemoryBufferAsync()
-        {
-            throw new NotImplementedException();
         }
 
         public string GenerateJavaScriptLoggerObject()

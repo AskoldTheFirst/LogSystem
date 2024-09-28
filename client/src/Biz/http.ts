@@ -51,6 +51,10 @@ const Log = {
     page: (filter: any) => requests.get(`log`, filter),
 }
 
+const Trace = {
+    page: (filter: any) => requests.get(`trace`, filter),
+}
+
 const Account = {
     login: (values: any) => requests.post('account/login', values),
     register: (values: any) => requests.post('account/register', values),
@@ -59,7 +63,8 @@ const Account = {
 
 const http = {
     Account,
-    Log
+    Log,
+    Trace
 }
 
 export default http;

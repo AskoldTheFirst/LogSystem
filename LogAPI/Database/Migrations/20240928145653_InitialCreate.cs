@@ -60,8 +60,8 @@ namespace LogAPI.Database.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Severity = table.Column<int>(type: "int", nullable: false),
-                    LogDTServer = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    LogDTClient = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dtServer = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    dtClient = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RequestCtx = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -88,9 +88,9 @@ namespace LogAPI.Database.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LogDTClient = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Ticks = table.Column<long>(type: "bigint", nullable: false),
-                    SessionId = table.Column<long>(type: "bigint", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Ticks = table.Column<long>(type: "bigint", nullable: true),
+                    SessionId = table.Column<long>(type: "bigint", nullable: true),
                     Tag1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tag2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tag3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -211,8 +211,8 @@ namespace LogAPI.Database.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1b8ac1d8-9eb7-4d9b-9d61-f5f927f3f71d", null, "Member", "MEMBER" },
-                    { "232d1455-9a7b-4a3a-b314-46336f27356e", null, "Admin", "ADMIN" }
+                    { "0bc9d25a-2ed5-4cd6-9172-bb85b814d065", null, "Member", "MEMBER" },
+                    { "8e9d3a8b-3bba-4da1-bf70-dd33c554fcaf", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

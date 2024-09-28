@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LogClient
 {
     public interface ITracer
     {
-        Task TraceAsync();
+        Task TraceAsync(string message, string user = null);
 
-        void WriteTraceToMemoryBuffer();
-
-        Task FlushTraceMemoryBufferAsync();
+        Task TraceAsync(string message, string user, long? ticks, long? sessionId, string tag1 = null, string tag2 = null, string tag3 = null);
     }
 }

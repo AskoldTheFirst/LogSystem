@@ -16,11 +16,11 @@ namespace LogAPI.Database.Entities
         public string Username { get; set; }
 
         [Required]
-        public DateTime LogDTClient { get; set; }
+        public DateTime Date { get; set; }
 
-        public long Ticks { get; set; }
+        public long? Ticks { get; set; }
 
-        public long SessionId { get; set; }
+        public long? SessionId { get; set; }
 
         public string Tag1 { get; set; }
 

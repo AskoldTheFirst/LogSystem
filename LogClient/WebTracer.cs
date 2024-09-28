@@ -33,7 +33,7 @@ namespace LogClient
                     Product = _currentProduct,
                     Message = message,
                     Username = user,
-                    Date = DateTime.UtcNow.ToString(),
+                    Date = DateTime.Now.ToString(),
                     Ticks = ticks,
                     SessionId = sessionId,
                     Tag1 = tag1,
@@ -43,7 +43,7 @@ namespace LogClient
 
                 string json = JsonSerializer.Serialize(newTrace);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                await _httpClient.PostAsync("/api/Traces", stringContent).ConfigureAwait(false);
+                await _httpClient.PostAsync("/api/Trace", stringContent).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

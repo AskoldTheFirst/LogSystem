@@ -5,12 +5,18 @@ namespace LogAPI.DTOs
 {
     public class TraceDto
     {
+        public TraceDto()
+        {
+            Ticks = null;
+            SessionId = null;
+        }
+
         public TraceDto(Trace dbTrace)
         {
             Product = dbTrace.ProductId;
             Message = dbTrace.Message;
             Username = dbTrace.Username;
-            Date = dbTrace.Date;
+            Date = dbTrace.Date.ToString("dd-MM-yy hh:ss");
             Ticks = dbTrace.Ticks;
             SessionId = dbTrace.SessionId;
             Tag1 = dbTrace.Tag1;
@@ -24,7 +30,7 @@ namespace LogAPI.DTOs
 
         public string Username { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public long? Ticks { get; set; }
 
@@ -42,7 +48,7 @@ namespace LogAPI.DTOs
                 ProductId = Product,
                 Message = Message,
                 Username = Username,
-                Date = Date,
+                Date = DateTime.Parse(Date),
                 Ticks = Ticks,
                 SessionId = SessionId,
                 Tag1 = Tag1,

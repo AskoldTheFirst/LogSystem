@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import Login from "../Pages/Account/Login";
-import Logs from "../Pages/Log/Logs";
-import Traces from "../Pages/Trace/Traces";
+import Logs from "../Pages/ViewLog/Logs";
+import Traces from "../Pages/ViewTrace/Traces";
 import Statistics from "../Pages/Statistics/Statistics";
 import ServerError from "../Pages/Errors/ServerError";
 import NotFound from "../Pages/Errors/NotFound";

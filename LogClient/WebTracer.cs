@@ -15,6 +15,7 @@ namespace LogClient
         public WebTracer(string hostName, Product currentProduct)
         {
             _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(3);
             _httpClient.BaseAddress = new Uri(hostName);
             _currentProduct = currentProduct;
         }

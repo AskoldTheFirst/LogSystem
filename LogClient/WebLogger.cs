@@ -15,6 +15,7 @@ namespace LogClient
         public WebLogger(string logServerDomainName, Product currentProduct, LayerType currentLayer)
         {
             _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(3);
             _httpClient.BaseAddress = new Uri(logServerDomainName);
             _currentProduct = currentProduct;
             _currentLayer = currentLayer;

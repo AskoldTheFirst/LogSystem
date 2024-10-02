@@ -7,10 +7,14 @@ import TraceFilterPanel from "./TraceFilterPanel";
 
 export default function Traces() {
     const [filter, setFilter] = useState<TraceFilter>({ messageSearchTerm: '', userSearchTerm: '', product: 0 });
-    const [flag, setFlag] = useState<boolean>(true);
+    let [flag, setFlag] = useState<boolean>(true);
 
     function updateHandler() {
+        //console.log(flag);
+        
+        // TODO - What is this ?!! :O
         setFlag(!flag);
+        flag = !flag;
     }
 
     return (

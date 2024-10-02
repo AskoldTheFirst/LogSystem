@@ -15,6 +15,7 @@ export default function TimeUpdaterComponent({ intervalInSeconds, updateHandler 
         const id = setInterval(() => {
             updateLogs();
         }, intervalInSeconds * 1000);
+        // TODO: how to treat this?
         return () => clearInterval(id);
     }, [autoUpdate]);
 

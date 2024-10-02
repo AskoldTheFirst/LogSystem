@@ -8,7 +8,7 @@ import ServerError from "../Pages/Errors/ServerError";
 import NotFound from "../Pages/Errors/NotFound";
 import RequireAuth from "./RequireAuth";
 
-// TODO: what to implement else here?
+// TODO: does it work for hiding personal pages?
 export const router = createBrowserRouter([
     {
         path: '/',

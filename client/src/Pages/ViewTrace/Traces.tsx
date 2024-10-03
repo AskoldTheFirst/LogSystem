@@ -6,28 +6,32 @@ import { Grid } from "@mui/material";
 import TraceFilterPanel from "./TraceFilterPanel";
 
 export default function Traces() {
-    const [filter, setFilter] = useState<TraceFilter>({ messageSearchTerm: '', userSearchTerm: '', product: 0 });
-    let [flag, setFlag] = useState<boolean>(true);
+  const [filter, setFilter] = useState<TraceFilter>({
+    messageSearchTerm: "",
+    userSearchTerm: "",
+    product: 0,
+  });
 
-    function updateHandler() {
-        //console.log(flag);
-        
-        // TODO - What is this ?!! :O
-        setFlag(!flag);
-        flag = !flag;
-    }
+  const [flag, setFlag] = useState<boolean>(true);
 
-    return (
-        <>
-            <TimeUpdaterComponent intervalInSeconds={12} updateHandler={updateHandler} />
-            <Grid container columnSpacing={4}>
-                <Grid item xs={10} sm={10} md={2}>
-                    <TraceFilterPanel filter={filter} setFilter={setFilter} />
-                </Grid>
-                <Grid item xs={10} sm={10} md={10}>
-                    <TracesTable filter={filter} updater={flag} />
-                </Grid>
-            </Grid>
-        </>
-    );
+  function updateHandler() {
+    setFlag((prevFlag) => !prevFlag);
+  }
+
+  return (
+    <>
+      <TimeUpdaterComponent
+        intervalInSeconds={5}
+        updateHandler={updateHandler}
+      />
+      <Grid container columnSpacing={4}>
+        <Grid item xs={10} sm={10} md={2}>
+          <TraceFilterPanel filter={filter} setFilter={setFilter} />
+        </Grid>
+        <Grid item xs={10} sm={10} md={10}>
+          <TracesTable filter={filter} updater={flag} />
+        </Grid>
+      </Grid>
+    </>
+  );
 }

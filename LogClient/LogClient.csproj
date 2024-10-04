@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="WebLogger.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="WebLogger.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Types\" />
   </ItemGroup>
 

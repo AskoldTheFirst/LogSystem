@@ -1,11 +1,10 @@
-
 using System.Text;
 using System.Text.Json;
 using LogClient.Types;
 
 namespace LogClient
 {
-    public sealed class WebTracer : ITracer
+    public sealed class WebTracer : BaseLogger, ITracer
     {
         readonly HttpClient _httpClient;
 
@@ -27,7 +26,7 @@ namespace LogClient
 
         public async Task TraceAsync(string message, string user, long? ticks, long? sessionId, string tag1 = null, string tag2 = null, string tag3 = null)
         {
-            try
+            Func<Task> func = async () =>
             {
                 Trace newTrace = new()
                 {
@@ -45,15 +44,11 @@ namespace LogClient
                 string json = JsonSerializer.Serialize(newTrace);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync("/api/Trace", stringContent).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                // just to swallow the exception.
+            };
 
-                #if DEBUG
-                    Console.WriteLine(ex.Message);
-                #endif
-            }
+
+            // Base class method knows better how to execute logging.
+            await PerformActionAsync(func);
         }
     }
 }

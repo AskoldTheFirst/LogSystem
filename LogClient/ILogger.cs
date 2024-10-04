@@ -22,6 +22,6 @@ namespace LogClient
             string tag2 = null,
             string tag3 = null);
 
-        string GenerateJavaScriptLoggerObject();
+        string GenerateJavaScriptLoggerObject(string hostName, Product product);
     }
 }

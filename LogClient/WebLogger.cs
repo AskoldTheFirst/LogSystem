@@ -1,10 +1,12 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Reflection;
+using System.Text;
 using LogClient.Types;
 using System.Text.Json;
 
 namespace LogClient
 {
-    public sealed class WebLogger : ILogger
+    public sealed class WebLogger : BaseLogger, ILogger
     {
         readonly HttpClient _httpClient;
 
@@ -12,8 +14,11 @@ namespace LogClient
 
         readonly LayerType _currentLayer;
 
+        readonly string _hostName;
+
         public WebLogger(string logServerDomainName, Product currentProduct, LayerType currentLayer)
         {
+            _hostName = logServerDomainName;
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(3);
             _httpClient.BaseAddress = new Uri(logServerDomainName);
@@ -28,13 +33,13 @@ namespace LogClient
             string user,
             string requestContext,
             string environmentContect,
-            string browser= null,
+            string browser = null,
             string ipAddress = null,
-            string tag1 = null, 
+            string tag1 = null,
             string tag2 = null,
             string tag3 = null)
         {
-            try
+            Func<Task> func = async () =>
             {
                 string processedException = ProcessException(exception);
                 Log newLog = new()
@@ -58,15 +63,10 @@ namespace LogClient
                 string json = JsonSerializer.Serialize(newLog);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync("/api/Log", stringContent).ConfigureAwait(false);
-            }
-            catch(Exception ex)
-            {
-                // just to swallow the exception.
+            };
 
-                #if DEBUG
-                    Console.WriteLine(ex.Message);
-                #endif
-            }
+            // Base class method knows better how to execute logging.
+            await PerformActionAsync(func);
         }
 
         public async Task LogAsync(
@@ -77,10 +77,27 @@ namespace LogClient
             await LogAsync(message, severity, exception, null, null, null).ConfigureAwait(false);
         }
 
-        public string GenerateJavaScriptLoggerObject()
+        public string GenerateJavaScriptLoggerObject(string hostName, Product product)
         {
-            
-            return "";
+            var assembly = Assembly.GetExecutingAssembly();
+            string javaScriptResource = "WebLogger.js";
+            string javaScriptText = String.Empty;
+
+            using (Stream stream = assembly.GetManifestResourceStream(javaScriptResource))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    javaScriptText = reader.ReadToEnd();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(javaScriptText))
+            {
+                javaScriptText = javaScriptText.Replace("{{host_name}}", _hostName);
+                javaScriptText = javaScriptText.Replace("{{prod_id}}", product.ToString());
+            }
+
+            return javaScriptText;
         }
 
         private static string ProcessException(Exception ex)
@@ -96,7 +113,7 @@ namespace LogClient
                 sb.Append(ex.StackTrace);
                 sb.AppendLine();
             }
-            
+
             if (ex.InnerException != null)
             {
                 sb.AppendLine("Inner exception: ");

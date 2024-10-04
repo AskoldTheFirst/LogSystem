@@ -21,7 +21,7 @@ export default function Traces() {
   return (
     <>
       <TimeUpdaterComponent
-        intervalInSeconds={5}
+        intervalInSeconds={30}
         updateHandler={updateHandler}
       />
       <Grid container columnSpacing={4}>

@@ -80,7 +80,7 @@ namespace LogClient
         public async Task<string> GenerateJavaScriptLoggerObjectAsync(Product product)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string javaScriptResource = "WebLogger.js";
+            string javaScriptResource = "LogClient.WebLogger.js";
             string javaScriptText = String.Empty;
 
             using (Stream stream = assembly.GetManifestResourceStream(javaScriptResource))
@@ -94,7 +94,7 @@ namespace LogClient
             if (!String.IsNullOrEmpty(javaScriptText))
             {
                 javaScriptText = javaScriptText.Replace("{{host_name}}", _hostName);
-                javaScriptText = javaScriptText.Replace("{{prod_id}}", product.ToString());
+                javaScriptText = javaScriptText.Replace("{{prod_id}}", ((int)product).ToString());
             }
 
             return javaScriptText;

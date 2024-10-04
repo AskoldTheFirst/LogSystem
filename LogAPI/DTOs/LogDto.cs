@@ -60,7 +60,7 @@ namespace LogAPI.DTOs
             return new Log {
                 ProductId = Product,
                 Severity = Severity,
-                dtClient = DateTime.Parse(DT),
+                dtClient = String.IsNullOrEmpty(DT) ? DateTime.Now : DateTime.Parse(DT),
                 Message = Message,
                 Username = Username,
                 RequestCtx = RequestCtx,

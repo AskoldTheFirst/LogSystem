@@ -7,8 +7,9 @@ function WebLogger() {
 
     // public:
     this.log = function (message, user, isCritical = false) {
-        fetch(_host_name, {method: 'POST', headers: {
-            'Content-type': 'application/json; charset=UTF=8',
+        fetch(_host_name + '/api/Log', {method: 'POST', headers: {
+            'Content-type': 'application/json; charset=utf-8'
+        },
             body: JSON.stringify({
                 product: _prod_id,
                 severity: isCritical ? 3 : 1,
@@ -24,7 +25,7 @@ function WebLogger() {
                 Tag2: '',
                 Tag3: '',
             })
-        }});
+        });
     }
 }
 

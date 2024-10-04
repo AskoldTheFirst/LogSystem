@@ -77,7 +77,7 @@ namespace LogClient
             await LogAsync(message, severity, exception, null, null, null).ConfigureAwait(false);
         }
 
-        public string GenerateJavaScriptLoggerObject(string hostName, Product product)
+        public async Task<string> GenerateJavaScriptLoggerObjectAsync(Product product)
         {
             var assembly = Assembly.GetExecutingAssembly();
             string javaScriptResource = "WebLogger.js";
@@ -87,7 +87,7 @@ namespace LogClient
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    javaScriptText = reader.ReadToEnd();
+                    javaScriptText = await reader.ReadToEndAsync();
                 }
             }
 

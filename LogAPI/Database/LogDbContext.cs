@@ -22,6 +22,10 @@ namespace LogAPI.Database
                 );
 
             builder.Entity<Log>().Property(c => c.dtServer).HasDefaultValueSql("getdate()");
+
+            builder.Entity<Log>().HasIndex(c => c.Username);
+
+            builder.Entity<Trace>().HasIndex(c => c.Username);
         }
 
         public DbSet<Log> Logs { get; set; }

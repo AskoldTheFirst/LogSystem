@@ -16,6 +16,7 @@ import { PageDto } from '../../DTOs/PageDto';
 import { ProductToString } from '../../Biz/Types/Products';
 import { SeverityToString } from '../../Biz/Types/Severity';
 import { LayerToString } from '../../Biz/Types/LayerType';
+import { Helper } from '../../Biz/Helper';
 
 interface Props {
     filter: LogFilter | undefined;
@@ -92,29 +93,29 @@ export default function LogsTable({ filter, updater }: Props) {
 
     return (
         <>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="customized table">
+            <TableContainer component={Paper} sx={{width: '100%'}}>
+                <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="right">Product</StyledTableCell>
-                            <StyledTableCell align="right">Severity</StyledTableCell>
-                            <StyledTableCell align="right">Message</StyledTableCell>
-                            <StyledTableCell align="right">Date</StyledTableCell>
-                            <StyledTableCell align="right">User</StyledTableCell>
-                            <StyledTableCell align="right">Layer</StyledTableCell>
-                            <StyledTableCell align="right">Exception</StyledTableCell>
+                            <StyledTableCell align="center" width='50px'>Product</StyledTableCell>
+                            <StyledTableCell align="center" width='50px'>Severity</StyledTableCell>
+                            <StyledTableCell align="left" width='100px'>Message</StyledTableCell>
+                            <StyledTableCell align="center" width='50px'>Date</StyledTableCell>
+                            <StyledTableCell align="left" width='40px'>User</StyledTableCell>
+                            <StyledTableCell align="center" width='50px'>Layer</StyledTableCell>
+                            <StyledTableCell align="center" width='160px'>Exception</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {logs.map((row, index) => (
                             <StyledTableRow key={index}>
-                                <StyledTableCell align="right">{ProductToString(row.product)}</StyledTableCell>
-                                <StyledTableCell align="right">{SeverityToString(row.severity)}</StyledTableCell>
-                                <StyledTableCell align="right">{row.message}</StyledTableCell>
-                                <StyledTableCell align="right">{row.dt}</StyledTableCell>
-                                <StyledTableCell align="right">{row.username}</StyledTableCell>
-                                <StyledTableCell align="right">{LayerToString(row.layerType)}</StyledTableCell>
-                                <StyledTableCell align="right">{row.exception}</StyledTableCell>
+                                <StyledTableCell align="center" width='50px'>{ProductToString(row.product)}</StyledTableCell>
+                                <StyledTableCell align="center" width='50px'>{SeverityToString(row.severity)}</StyledTableCell>
+                                <StyledTableCell align="left" width='100px'>{Helper.AdaptTextToRowLenthLimit(row.message, 20, 100)}</StyledTableCell>
+                                <StyledTableCell align="center" width='50px'>{row.dt}</StyledTableCell>
+                                <StyledTableCell align="left" width='40px'>{row.username}</StyledTableCell>
+                                <StyledTableCell align="center" width='50px'>{LayerToString(row.layerType)}</StyledTableCell>
+                                <StyledTableCell align="left" width='160px'>{Helper.AdaptTextToRowLenthLimit(row.exception, 28, 200)}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

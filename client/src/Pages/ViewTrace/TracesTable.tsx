@@ -6,6 +6,7 @@ import { PageDto } from "../../DTOs/PageDto";
 import http from "../../Biz/http";
 import { TracePageFilterParamsDto } from "../../DTOs/TracePageFilterParamsDto";
 import { ProductToString } from "../../Biz/Types/Products";
+import { Helper } from "../../Biz/Helper";
 
 interface Props {
     filter: TraceFilter | undefined;
@@ -84,23 +85,23 @@ export default function TracesTable({ filter, updater }: Props) {
                 <Table sx={{ minWidth: 500 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="right">Product</StyledTableCell>
-                            <StyledTableCell align="right">Message</StyledTableCell>
-                            <StyledTableCell align="right">Date</StyledTableCell>
-                            <StyledTableCell align="right">User</StyledTableCell>
-                            <StyledTableCell align="right">Ticks</StyledTableCell>
-                            <StyledTableCell align="right">SessionId</StyledTableCell>
+                            <StyledTableCell align="center" width='70px'>Product</StyledTableCell>
+                            <StyledTableCell align="left" width='220px'>Message</StyledTableCell>
+                            <StyledTableCell align="left" width='50px'>Date</StyledTableCell>
+                            <StyledTableCell align="left" width='70px'>User</StyledTableCell>
+                            <StyledTableCell align="center" width='80px'>Ticks</StyledTableCell>
+                            <StyledTableCell align="center" width='80px'>SessionId</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {traces.map((row, index) => (
                             <StyledTableRow key={index}>
-                                <StyledTableCell align="right">{ProductToString(row.product)}</StyledTableCell>
-                                <StyledTableCell align="right">{row.message}</StyledTableCell>
-                                <StyledTableCell align="right">{row.dt}</StyledTableCell>
-                                <StyledTableCell align="right">{row.username}</StyledTableCell>
-                                <StyledTableCell align="right">{row.ticks}</StyledTableCell>
-                                <StyledTableCell align="right">{row.sessionId}</StyledTableCell>
+                                <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
+                                <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.message, 40, 140)}</StyledTableCell>
+                                <StyledTableCell align="left">{row.dt}</StyledTableCell>
+                                <StyledTableCell align="left">{row.username}</StyledTableCell>
+                                <StyledTableCell align="center">{row.ticks}</StyledTableCell>
+                                <StyledTableCell align="center">{row.sessionId}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

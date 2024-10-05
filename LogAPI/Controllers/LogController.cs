@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LogAPI.Database;
 using LogAPI.DTOs;
 using LogAPI.Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 using LogAPI.Types;
 using Microsoft.AspNetCore.Authorization;
 
@@ -50,7 +45,7 @@ namespace LogAPI.Controllers
             return Ok();
         }
 
-        public static IQueryable<Database.Entities.Log> ApplyFilterWhere(IQueryable<Database.Entities.Log> query, LogFilterParams param)
+        public static IQueryable<Log> ApplyFilterWhere(IQueryable<Log> query, LogFilterParams param)
         {
             if (param.LayerType != LayerType.All)
             {

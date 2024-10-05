@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LogAPI.Database;
 using LogAPI.DTOs;
@@ -24,10 +20,12 @@ namespace LogAPI.Controllers
         {
             var query = _ctx.Traces.AsQueryable();
             query = ApplyFilterWhere(query, param);
-            
+
             int skipAmount = (param.PageNumber - 1) * param.PageSize;
 
-            TraceDto[] selectedRows = await (from q in query orderby q.Id descending select new TraceDto(q))
+            TraceDto[] selectedRows = await (from q in query
+                                             orderby q.Id descending
+                                             select new TraceDto(q))
                         .Skip(skipAmount)
                         .Take(param.PageSize).ToArrayAsync();
 
@@ -61,7 +59,7 @@ namespace LogAPI.Controllers
             return Ok();
         }
 
-        public static IQueryable<Database.Entities.Trace> ApplyFilterWhere(IQueryable<Database.Entities.Trace> query, FilterParamsBase param)
+        public static IQueryable<Trace> ApplyFilterWhere(IQueryable<Trace> query, FilterParamsBase param)
         {
             if (param.Product != Product.All)
             {

@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <None Remove="WebLogger.js" />
+    <None Remove="WebTracer.js" />
+    <None Remove="WebTraces.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="WebLogger.js" />
+    <EmbeddedResource Include="WebTracer.js" />
   </ItemGroup>
 
   <ItemGroup>

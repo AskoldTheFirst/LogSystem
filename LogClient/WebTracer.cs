@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using LogClient.Types;
@@ -10,9 +11,12 @@ namespace LogClient
 
         readonly Product _currentProduct;
 
+        readonly string _hostName;
+
 
         public WebTracer(string hostName, Product currentProduct)
         {
+            _hostName = hostName;
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(3);
             _httpClient.BaseAddress = new Uri(hostName);
@@ -33,7 +37,6 @@ namespace LogClient
                     Product = _currentProduct,
                     Message = message,
                     Username = user,
-                    Date = DateTime.Now.ToString(),
                     Ticks = ticks,
                     SessionId = sessionId,
                     Tag1 = tag1,
@@ -47,8 +50,31 @@ namespace LogClient
             };
 
 
-            // Base class method knows better how to execute logging.
+            // This method from the base class knows better how to execute logging.
             await PerformActionAsync(func);
+        }
+
+        public async Task<string> GenerateJavaScriptTracerObjectAsync(Product product)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            string javaScriptResource = "LogClient.WebTracer.js";
+            string javaScriptText = String.Empty;
+
+            using (Stream stream = assembly.GetManifestResourceStream(javaScriptResource))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    javaScriptText = await reader.ReadToEndAsync();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(javaScriptText))
+            {
+                javaScriptText = javaScriptText.Replace("{{host_name}}", _hostName);
+                javaScriptText = javaScriptText.Replace("{{prod_id}}", ((int)product).ToString());
+            }
+
+            return javaScriptText;
         }
     }
 }

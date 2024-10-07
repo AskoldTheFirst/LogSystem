@@ -26,6 +26,8 @@ namespace LogAPI.Database
             builder.Entity<Log>().HasIndex(c => c.Username);
 
             builder.Entity<Trace>().HasIndex(c => c.Username);
+
+            builder.Entity<Trace>().HasIndex(c => c.Date);
         }
 
         public DbSet<Log> Logs { get; set; }

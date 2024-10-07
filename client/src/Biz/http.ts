@@ -61,10 +61,16 @@ const Account = {
     currentUser: () => requests.get('account/currentUser'),
 }
 
+const App = {
+    logger: () => requests.get(`app/logger`),
+    tracer: () => requests.get(`app/tracer`),
+}
+
 const http = {
     Account,
     Log,
-    Trace
+    Trace,
+    App
 }
 
 export default http;

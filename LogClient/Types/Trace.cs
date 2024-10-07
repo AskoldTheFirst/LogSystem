@@ -5,8 +5,6 @@ namespace LogClient.Types
     {
         public Product Product { get; set; }
 
-        public string Date { get; set; }
-
         public string Message { get; set; }
 
         public string Username { get; set; }

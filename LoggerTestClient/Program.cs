@@ -1,4 +1,5 @@
-﻿using LogClient;
+﻿using System.Diagnostics;
+using LogClient;
 using LogClient.Types;
 
 namespace LoggerTestClient
@@ -7,6 +8,10 @@ namespace LoggerTestClient
     {
         static async Task Main(string[] args)
         {
+            //Stopwatch stopwatch = new Stopwatch();
+
+            //Console.WriteLine(DateTime.Now.Ticks);
+
             //ILogger log = new WebLogger("http://localhost:5009/", Product.Tester, LayerType.BackEnd);
             ILogger log = new WebLogger("http://askold-001-site1.atempurl.com/", Product.Tester, LayerType.BackEnd);
             //await log.LogAsync("test msg", Severity.Middle, new ApplicationException("test exception"));

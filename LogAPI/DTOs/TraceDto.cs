@@ -48,7 +48,6 @@ namespace LogAPI.DTOs
                 ProductId = Product,
                 Message = Message,
                 Username = Username,
-                Date = DateTime.Parse(Date),
                 Ticks = Ticks,
                 SessionId = SessionId,
                 Tag1 = Tag1,

@@ -12,21 +12,26 @@ using LogAPI.Services;
 using LogAPI.Database.Entities;
 using LogAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using LogClient;
+using LogClient.Types;
 
 namespace LogAPI.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly ILogger<AccountController> _logger;
+        private readonly LogClient.ILogger _logger;
+
+        private readonly LogClient.ITracer _tracer;
 
         private readonly UserManager<User> _userManager;
 
         private readonly TokenService _tokenService;
 
-        public AccountController(LogDbContext logDbContext, ILogger<AccountController> logger,
+        public AccountController(LogDbContext logDbContext, LogClient.ILogger logger, LogClient.ITracer tracer,
             UserManager<User> userManager, TokenService tokenService) : base(logDbContext)
         {
             _logger = logger;
+            _tracer = tracer;
             _userManager = userManager;
             _tokenService = tokenService;
         }

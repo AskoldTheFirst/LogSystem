@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using LogClient;
+using LogClient.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
+
+builder.Services.AddSingleton<LogClient.ILogger>(
+    new WebLogger("http://localhost:5009", Product.LogSystem, LayerType.BackEnd));
+
+builder.Services.AddSingleton<LogClient.ITracer>(
+    new WebTracer("http://localhost:5009", Product.LogSystem));
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();

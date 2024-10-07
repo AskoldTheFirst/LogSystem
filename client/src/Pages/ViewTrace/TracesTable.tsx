@@ -34,7 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function TracesTable({ updater }: Props) {
-    const { traceFilter } = useContext(GlobalContext)
+    const { traceFilter, user } = useContext(GlobalContext)
 
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
@@ -51,8 +51,11 @@ export default function TracesTable({ updater }: Props) {
         newFilter.pageNumber = pageNumber;
         newFilter.pageSize = pageSize;
 
+        const dtNow = Date.now();
+        window.Tracer.traceAdv('get traces start', user?.login, dtNow);
         http.Trace.page(newFilter)
             .then((pageData: PageDto<TraceDto>) => {
+                window.Tracer.traceAdv('get traces end', user?.login, dtNow);
                 setTraces(pageData.rows);
                 setTotalAmount(pageData.total);
             });

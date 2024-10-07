@@ -13,7 +13,7 @@ export default function Login() {
     const [passwordValid, setPasswordValid] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { setUser, user } = useContext(GlobalContext)
+    const { setUser } = useContext(GlobalContext)
     const navigate = useNavigate();
 
     async function submitForm(event: any) {
@@ -28,19 +28,18 @@ export default function Login() {
             setLoading(true);
 
             const dtNow = Date.now();
-            window.Tracer.traceAdv('login begin', null, dtNow);
+            window.Tracer.trace('login begin', null, dtNow);
 
             await http.Account.login({
                 username: login,
                 password: password
             })
                 .then(retValue => {
-                    window.Tracer.traceAdv('login end', retValue.login, dtNow);
+                    window.Tracer.trace('login end', retValue.login, dtNow);
                     localStorage.setItem('user', JSON.stringify(retValue));
                     setUser && setUser(retValue);
                     navigate('/logs');
                 })
-                .catch(error => window.Logger.log(error, user?.login))
                 .finally(() => setLoading(false));
         }
     }

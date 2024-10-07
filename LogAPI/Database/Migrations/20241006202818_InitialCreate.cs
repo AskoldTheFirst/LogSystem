@@ -63,7 +63,7 @@ namespace LogAPI.Database.Migrations
                     dtServer = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     dtClient = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RequestCtx = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EnvironmentCtx = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Browser = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -87,7 +87,7 @@ namespace LogAPI.Database.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ticks = table.Column<long>(type: "bigint", nullable: true),
                     SessionId = table.Column<long>(type: "bigint", nullable: true),
@@ -211,8 +211,8 @@ namespace LogAPI.Database.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0bc9d25a-2ed5-4cd6-9172-bb85b814d065", null, "Member", "MEMBER" },
-                    { "8e9d3a8b-3bba-4da1-bf70-dd33c554fcaf", null, "Admin", "ADMIN" }
+                    { "c5334d31-59fc-4d2e-aaa9-ad1469b1c5b7", null, "Member", "MEMBER" },
+                    { "fde2729c-0bfe-44e8-ae16-29cc71f60255", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -253,6 +253,16 @@ namespace LogAPI.Database.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logs_Username",
+                table: "Logs",
+                column: "Username");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Traces_Username",
+                table: "Traces",
+                column: "Username");
         }
 
         /// <inheritdoc />

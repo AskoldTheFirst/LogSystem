@@ -1,10 +1,9 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { AppState } from "../Biz/Types/AppState";
 import { useContext } from "react";
-import { Ctx } from "./App";
+import { GlobalContext } from "../globalContext";
 
 export default function RequireAuth() {
-    const { user } = useContext<AppState>(Ctx);
+    const { user } = useContext(GlobalContext)
     const location = useLocation();
 
     if (!user)

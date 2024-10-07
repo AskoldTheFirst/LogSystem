@@ -68,7 +68,7 @@ namespace LogAPI.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("dtClient")
                         .HasColumnType("datetime2");
@@ -79,6 +79,8 @@ namespace LogAPI.Database.Migrations
                         .HasDefaultValueSql("getdate()");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Logs");
                 });
@@ -117,9 +119,11 @@ namespace LogAPI.Database.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username");
 
                     b.ToTable("Traces");
                 });
@@ -218,13 +222,13 @@ namespace LogAPI.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0bc9d25a-2ed5-4cd6-9172-bb85b814d065",
+                            Id = "c5334d31-59fc-4d2e-aaa9-ad1469b1c5b7",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "8e9d3a8b-3bba-4da1-bf70-dd33c554fcaf",
+                            Id = "fde2729c-0bfe-44e8-ae16-29cc71f60255",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

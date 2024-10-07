@@ -16,7 +16,7 @@ namespace LogAPI.DTOs
             Product = dbTrace.ProductId;
             Message = dbTrace.Message;
             Username = dbTrace.Username;
-            Date = dbTrace.Date.ToString("dd-MM-yy hh:ss");
+            Date = dbTrace.Date.ToString("dd-MM-yyyy hh:ss");
             Ticks = dbTrace.Ticks;
             SessionId = dbTrace.SessionId;
             Tag1 = dbTrace.Tag1;

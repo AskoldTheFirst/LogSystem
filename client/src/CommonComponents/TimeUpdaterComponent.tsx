@@ -1,6 +1,5 @@
 import {
   Grid,
-  Stack,
   FormGroup,
   FormControlLabel,
   Switch,
@@ -52,40 +51,39 @@ export default function TimeUpdaterComponent({
   }
 
   return (
-    <Grid container columnSpacing={4}>
+    <Grid container columnSpacing={4} sx={{ width: '100%' }}>
       <Grid item xs={10} sm={10} md={2}></Grid>
       <Grid item xs={10} sm={10} md={9}>
-        {/* TODO - How to arrange horizontal items? */}
-        <Stack direction="row" sx={{ marginBottom: 2 }}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={autoUpdate}
-                  onChange={() => {
-                    setAutoUpdate(!autoUpdate);
-                  }}
-                />
-              }
-              label="Auto-Update:"
-              labelPlacement="start"
-            />
-          </FormGroup>
-
-          <Typography
-            sx={{ marginLeft: 3, paddingTop: "7px", minWidth: "80px" }}
-          >
-            Last updated at: {lastUpdate}
-          </Typography>
-
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={autoUpdate}
+                    onChange={() => {
+                      setAutoUpdate(!autoUpdate);
+                    }}
+                  />
+                }
+                label="Auto-Update:"
+                labelPlacement="start"
+              />
+            </FormGroup>
+            <Typography
+              sx={{ marginLeft: 4, minWidth: "80px" }}
+            >
+              Last updated at: {lastUpdate}
+            </Typography>
+          </div>
           <Button
-            sx={{ minWidth: "50px", border: 1, marginLeft: "35px" }}
+            sx={{ minWidth: "50px", border: 1, marginBottom: 2 }}
             onClick={() => updateLogs(true)}
           >
             <Typography>UPDATE NOW</Typography>
             <UpdateIcon sx={{ marginLeft: 1 }} />
           </Button>
-        </Stack>
+        </div>
       </Grid>
     </Grid>
   );

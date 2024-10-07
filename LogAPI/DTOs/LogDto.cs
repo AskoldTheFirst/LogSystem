@@ -13,7 +13,7 @@ namespace LogAPI.DTOs
         {
             Product = dbLog.ProductId;
             Severity = dbLog.Severity;
-            DT = dbLog.dtServer.ToString("dd-MM-yy hh:ss");
+            DT = dbLog.dtServer.ToString("dd-MM-yyyy hh:ss");
             Message = dbLog.Message;
             Username = dbLog.Username;
             RequestCtx = dbLog.RequestCtx;

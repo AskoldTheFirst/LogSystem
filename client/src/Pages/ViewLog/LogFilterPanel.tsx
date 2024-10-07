@@ -1,33 +1,16 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Ctx } from "../../App/App";
-import { AppState } from "../../Biz/Types/AppState";
-import {
-  Box,
-  Typography,
-  FormControl,
-  FormLabel,
-  TextField,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Typography, FormControl, FormLabel, TextField, Select, MenuItem, } from "@mui/material";
 import { LogFilter } from "../../Biz/Types/LogFilter";
+import { GlobalContext } from "../../globalContext";
 
-interface Props {
-  filter: LogFilter;
-  setFilter: (newFilter: LogFilter) => void;
-}
-
-export default function LogFilterPanel({ filter, setFilter }: Props) {
-  const [messageTerm, setMessageTerm] = useState<string>(
-    filter.messageSearchTerm
-  );
-  const [userTerm, setUserTerm] = useState<string>(filter.userSearchTerm);
-  const [product, setProduct] = useState<number>(filter.product);
+export default function LogFilterPanel() {
+  const { user, logFilter, setLogFilter } = useContext(GlobalContext)
+  const [messageTerm, setMessageTerm] = useState<string>(logFilter.messageSearchTerm);
+  const [userTerm, setUserTerm] = useState<string>(logFilter.userSearchTerm);
+  const [product, setProduct] = useState<number>(logFilter.product);
   const [severity, setSeverity] = useState<number>(0);
   const [layer, setLayer] = useState<number>(0);
-
-  const { user } = useContext<AppState>(Ctx);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +26,7 @@ export default function LogFilterPanel({ filter, setFilter }: Props) {
     newFilter.messageSearchTerm = messageTerm;
     newFilter.userSearchTerm = userTerm;
 
-    setFilter(newFilter);
+    setLogFilter(newFilter);
   }, [messageTerm, userTerm, product, severity, layer]);
 
   return (

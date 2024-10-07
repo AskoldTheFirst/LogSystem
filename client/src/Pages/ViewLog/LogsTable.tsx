@@ -7,8 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TableFooter, TablePagination } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { LogFilter } from '../../Biz/Types/LogFilter';
+import { useContext, useEffect, useState } from 'react';
 import { LogPageFilterParamsDto } from '../../DTOs/LogPageFilterParamsDto';
 import { LogDto } from '../../DTOs/LogDto';
 import http from '../../Biz/http';
@@ -17,14 +16,18 @@ import { ProductToString } from '../../Biz/Types/Products';
 import { SeverityToString } from '../../Biz/Types/Severity';
 import { LayerToString } from '../../Biz/Types/LayerType';
 import { Helper } from '../../Biz/Helper';
+import Modal from '../../Modal/modal';
+import useModal from '../../Hooks/useModal';
+import { GlobalContext } from '../../globalContext';
 
 interface Props {
-    filter: LogFilter | undefined;
     updater: boolean;
 }
 
+const exceptionTextLength = 200;
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    
+
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#72906d',
         color: theme.palette.common.white,
@@ -44,8 +47,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function LogsTable({ filter, updater }: Props) {
-
+export default function LogsTable({ updater }: Props) {
+    const { logFilter } = useContext(GlobalContext)
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
     const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -53,16 +56,13 @@ export default function LogsTable({ filter, updater }: Props) {
 
     useEffect(() => {
 
-        if (filter === undefined)
-            return;
-
         let newFilter = {} as LogPageFilterParamsDto;
-        
-        newFilter.layerType = filter.layerType;
-        newFilter.severity = filter.severity;
-        newFilter.product = filter.product;
-        newFilter.messageSearchTerm = filter.messageSearchTerm;
-        newFilter.userSearchTerm = filter.userSearchTerm;
+
+        newFilter.layerType = logFilter.layerType;
+        newFilter.severity = logFilter.severity;
+        newFilter.product = logFilter.product;
+        newFilter.messageSearchTerm = logFilter.messageSearchTerm;
+        newFilter.userSearchTerm = logFilter.userSearchTerm;
         newFilter.pageNumber = pageNumber;
         newFilter.pageSize = pageSize;
 
@@ -71,8 +71,8 @@ export default function LogsTable({ filter, updater }: Props) {
                 setLogs(pageData.rows);
                 setTotalAmount(pageData.total);
             });
-        
-    }, [filter, pageNumber, pageSize, updater]);
+
+    }, [logFilter, pageNumber, pageSize, updater]);
 
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -84,38 +84,45 @@ export default function LogsTable({ filter, updater }: Props) {
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-
         setPageSize(parseInt(event.target.value, 10));
     };
 
-    if (filter === undefined)
-        return <></>;
+    const { isOpen, openModal, closeModal } = useModal();
 
     return (
         <>
-            <TableContainer component={Paper} sx={{width: '100%'}}>
+            <TableContainer component={Paper} sx={{ width: '100%' }}>
                 <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="center" width='50px'>Product</StyledTableCell>
-                            <StyledTableCell align="center" width='50px'>Severity</StyledTableCell>
-                            <StyledTableCell align="left" width='100px'>Message</StyledTableCell>
-                            <StyledTableCell align="center" width='50px'>Date</StyledTableCell>
-                            <StyledTableCell align="left" width='40px'>User</StyledTableCell>
-                            <StyledTableCell align="center" width='50px'>Layer</StyledTableCell>
-                            <StyledTableCell align="center" width='160px'>Exception</StyledTableCell>
+                            <StyledTableCell align="center" width='6%'>Product</StyledTableCell>
+                            <StyledTableCell align="center" width='6%'>Severity</StyledTableCell>
+                            <StyledTableCell align="center" width='15%'>Message</StyledTableCell>
+                            <StyledTableCell align="center" width='15%'>Date</StyledTableCell>
+                            <StyledTableCell align="center" width='6%'>User</StyledTableCell>
+                            <StyledTableCell align="center" width='6%'>Layer</StyledTableCell>
+                            <StyledTableCell align="center" width='40%'>Exception</StyledTableCell>
+                            <StyledTableCell align="center" width='6%'>Detail</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {logs.map((row, index) => (
                             <StyledTableRow key={index}>
-                                <StyledTableCell align="center" width='50px'>{ProductToString(row.product)}</StyledTableCell>
-                                <StyledTableCell align="center" width='50px'>{SeverityToString(row.severity)}</StyledTableCell>
-                                <StyledTableCell align="left" width='100px'>{Helper.AdaptTextToRowLenthLimit(row.message, 20, 100)}</StyledTableCell>
-                                <StyledTableCell align="center" width='50px'>{row.dt}</StyledTableCell>
-                                <StyledTableCell align="left" width='40px'>{row.username}</StyledTableCell>
-                                <StyledTableCell align="center" width='50px'>{LayerToString(row.layerType)}</StyledTableCell>
-                                <StyledTableCell align="left" width='160px'>{Helper.AdaptTextToRowLenthLimit(row.exception, 28, 200)}</StyledTableCell>
+                                <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
+                                <StyledTableCell align="center">{SeverityToString(row.severity)}</StyledTableCell>
+                                <StyledTableCell align="center">{Helper.AdaptTextToRowLenthLimit(row.message, 20, 100)}</StyledTableCell>
+                                <StyledTableCell align="center">{row.dt}</StyledTableCell>
+                                <StyledTableCell align="center">{row.username}</StyledTableCell>
+                                <StyledTableCell align="center">{LayerToString(row.layerType)}</StyledTableCell>
+                                <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.exception, 28, exceptionTextLength)}</StyledTableCell>
+                                <StyledTableCell align="center"><div>
+                                    <button disabled={row.exception === undefined || row.exception?.length < exceptionTextLength} onClick={openModal}>View</button>
+                                    <Modal isOpen={isOpen} closeModal={closeModal}>
+                                        <h2>Exception details:</h2>
+                                        <p>{row.exception}</p>
+                                        <button onClick={closeModal}>Закрыть</button>
+                                    </Modal>
+                                </div></StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
@@ -124,7 +131,7 @@ export default function LogsTable({ filter, updater }: Props) {
                             <TablePagination
                                 defaultValue={10}
                                 rowsPerPageOptions={[10, 25, 50]}
-                                colSpan={4}
+                                colSpan={8}
                                 count={totalAmount}
                                 rowsPerPage={pageSize}
                                 showFirstButton={true}

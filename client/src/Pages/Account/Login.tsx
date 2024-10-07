@@ -4,8 +4,7 @@ import { Box, FormControl, FormLabel, TextField, Typography } from "@mui/materia
 import { useContext, useState } from "react";
 import http from "../../Biz/http";
 import { useNavigate } from "react-router-dom";
-import { AppState } from "../../Biz/Types/AppState";
-import { Ctx } from "../../App/App";
+import { GlobalContext } from "../../globalContext";
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');
@@ -14,7 +13,7 @@ export default function Login() {
     const [passwordValid, setPasswordValid] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { setUser } = useContext<AppState>(Ctx);
+    const { setUser } = useContext(GlobalContext)
     const navigate = useNavigate();
 
     async function submitForm(event: any) {

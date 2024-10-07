@@ -7,11 +7,13 @@ import '@fontsource/roboto/700.css';
 import './index.css'
 import { RouterProvider } from 'react-router-dom';
 import { router } from './App/Routes.tsx';
+import { StrictMode } from 'react';
+import { GlobalContextProvider } from './globalContext.tsx';
 
-// TODO: can we createContext() here? At least for using in http.
 createRoot(document.getElementById('root')!).render(
-  // TODO: why to use StrictMode?
-  // <StrictMode>
-    <RouterProvider router={router} />
-  //</StrictMode>,
+  <StrictMode>
+    <GlobalContextProvider>
+      <RouterProvider router={router} />
+    </GlobalContextProvider>
+  </StrictMode>
 )

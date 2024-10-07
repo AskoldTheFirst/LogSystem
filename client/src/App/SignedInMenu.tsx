@@ -1,11 +1,10 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useContext } from "react";
-import { AppState } from "../Biz/Types/AppState";
-import { Ctx } from "./App";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../globalContext";
 
 export default function SignedInMenu() {
-    const { user, setUser } = useContext<AppState>(Ctx);
+    const { user, setUser } = useContext(GlobalContext)
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

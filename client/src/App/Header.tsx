@@ -13,8 +13,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import SignedInMenu from './SignedInMenu';
-import { AppState } from '../Biz/Types/AppState';
-import { Ctx } from './App';
+import { GlobalContext } from '../globalContext';
 
 const pages = [
     { title: 'Log', path: '/logs' },
@@ -23,7 +22,7 @@ const pages = [
 ];
 
 function ResponsiveAppBar() {
-    const { user } = useContext<AppState>(Ctx);
+    const { user } = useContext(GlobalContext)
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

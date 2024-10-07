@@ -1,31 +1,17 @@
-import {
-  Box,
-  Typography,
-  FormControl,
-  FormLabel,
-  TextField,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Typography, FormControl, FormLabel, TextField, Select, MenuItem } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { TraceFilter } from "../../Biz/Types/TraceFilter";
 import { useNavigate } from "react-router-dom";
-import { AppState } from "../../Biz/Types/AppState";
-import { Ctx } from "../../App/App";
+import { GlobalContext } from "../../globalContext";
 
-interface Props {
-  filter: TraceFilter;
-  setFilter: (newFilter: TraceFilter) => void;
-}
 
-export default function TraceFilterPanel({ filter, setFilter }: Props) {
-  const [messageTerm, setMessageTerm] = useState<string>(
-    filter.messageSearchTerm
-  );
-  const [userTerm, setUserTerm] = useState<string>(filter.userSearchTerm);
-  const [product, setProduct] = useState<number>(filter.product);
+export default function TraceFilterPanel() {
+  const { traceFilter, setTraceFilter } = useContext(GlobalContext)
+  const [messageTerm, setMessageTerm] = useState<string>(traceFilter.messageSearchTerm);
+  const [userTerm, setUserTerm] = useState<string>(traceFilter.userSearchTerm);
+  const [product, setProduct] = useState<number>(traceFilter.product);
 
-  const { user } = useContext<AppState>(Ctx);
+  const { user } = useContext(GlobalContext)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,9 +20,9 @@ export default function TraceFilterPanel({ filter, setFilter }: Props) {
     }
 
     if (
-        filter.product !== product ||
-        filter.messageSearchTerm !== messageTerm ||
-        filter.userSearchTerm !== userTerm
+      traceFilter.product !== product ||
+      traceFilter.messageSearchTerm !== messageTerm ||
+      traceFilter.userSearchTerm !== userTerm
     ) {
       let newFilter = {} as TraceFilter;
 
@@ -44,7 +30,7 @@ export default function TraceFilterPanel({ filter, setFilter }: Props) {
       newFilter.messageSearchTerm = messageTerm;
       newFilter.userSearchTerm = userTerm;
 
-      setFilter(newFilter);
+      setTraceFilter(newFilter);
     }
   }, [messageTerm, userTerm, product]);
 

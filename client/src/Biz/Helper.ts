@@ -1,3 +1,5 @@
+import { UserDto } from "../DTOs/UserDto";
+
 export class Helper {
 
     static AdaptTextToRowLenthLimit(text: string | null | undefined, rowLimit: number, entireTextLimit: number): string {
@@ -32,5 +34,14 @@ export class Helper {
         }
 
         return text;
+    }
+
+    static GetCurrentUser(): UserDto | null {
+        const stringUser = localStorage.getItem('user');
+        if (stringUser) {
+            return JSON.parse(stringUser);
+        }
+    
+        return null;
     }
 }

@@ -1,17 +1,10 @@
 import { useState } from "react";
 import TimeUpdaterComponent from "../../CommonComponents/TimeUpdaterComponent";
 import TracesTable from "./TracesTable";
-import { TraceFilter } from "../../Biz/Types/TraceFilter";
 import { Grid } from "@mui/material";
 import TraceFilterPanel from "./TraceFilterPanel";
 
 export default function Traces() {
-  const [filter, setFilter] = useState<TraceFilter>({
-    messageSearchTerm: "",
-    userSearchTerm: "",
-    product: 0,
-  });
-
   const [flag, setFlag] = useState<boolean>(true);
 
   function updateHandler() {
@@ -26,10 +19,10 @@ export default function Traces() {
       />
       <Grid container columnSpacing={4}>
         <Grid item xs={10} sm={10} md={2}>
-          <TraceFilterPanel filter={filter} setFilter={setFilter} />
+          <TraceFilterPanel />
         </Grid>
         <Grid item xs={10} sm={10} md={10}>
-          <TracesTable filter={filter} updater={flag} />
+          <TracesTable updater={flag} />
         </Grid>
       </Grid>
     </>

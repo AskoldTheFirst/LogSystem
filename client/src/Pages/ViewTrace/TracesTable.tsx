@@ -1,15 +1,14 @@
 import { Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
-import { TraceFilter } from "../../Biz/Types/TraceFilter";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TraceDto } from "../../DTOs/TraceDto";
 import { PageDto } from "../../DTOs/PageDto";
 import http from "../../Biz/http";
 import { TracePageFilterParamsDto } from "../../DTOs/TracePageFilterParamsDto";
 import { ProductToString } from "../../Biz/Types/Products";
 import { Helper } from "../../Biz/Helper";
+import { GlobalContext } from "../../globalContext";
 
 interface Props {
-    filter: TraceFilter | undefined;
     updater: boolean;
 }
 
@@ -34,7 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function TracesTable({ filter, updater }: Props) {
+export default function TracesTable({ updater }: Props) {
+    const { traceFilter } = useContext(GlobalContext)
 
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
@@ -43,14 +43,11 @@ export default function TracesTable({ filter, updater }: Props) {
 
     useEffect(() => {
 
-        if (filter === undefined)
-            return;
-
         let newFilter = {} as TracePageFilterParamsDto;
 
-        newFilter.product = filter.product;
-        newFilter.messageSearchTerm = filter.messageSearchTerm;
-        newFilter.userSearchTerm = filter.userSearchTerm;
+        newFilter.product = traceFilter.product;
+        newFilter.messageSearchTerm = traceFilter.messageSearchTerm;
+        newFilter.userSearchTerm = traceFilter.userSearchTerm;
         newFilter.pageNumber = pageNumber;
         newFilter.pageSize = pageSize;
 
@@ -60,7 +57,7 @@ export default function TracesTable({ filter, updater }: Props) {
                 setTotalAmount(pageData.total);
             });
 
-    }, [filter, pageNumber, pageSize, updater]);
+    }, [traceFilter, pageNumber, pageSize, updater]);
 
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -76,9 +73,6 @@ export default function TracesTable({ filter, updater }: Props) {
         setPageSize(parseInt(event.target.value, 10));
     };
 
-    if (filter === undefined)
-        return <></>;
-
     return (
         <>
             <TableContainer component={Paper}>
@@ -87,9 +81,9 @@ export default function TracesTable({ filter, updater }: Props) {
                         <TableRow>
                             <StyledTableCell align="center" width='70px'>Product</StyledTableCell>
                             <StyledTableCell align="left" width='220px'>Message</StyledTableCell>
-                            <StyledTableCell align="left" width='50px'>Date</StyledTableCell>
-                            <StyledTableCell align="left" width='70px'>User</StyledTableCell>
-                            <StyledTableCell align="center" width='80px'>Ticks</StyledTableCell>
+                            <StyledTableCell align="center" width='60px'>Date</StyledTableCell>
+                            <StyledTableCell align="center" width='70px'>User</StyledTableCell>
+                            <StyledTableCell align="center" width='80px'>Ticks, mls</StyledTableCell>
                             <StyledTableCell align="center" width='80px'>SessionId</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -97,10 +91,10 @@ export default function TracesTable({ filter, updater }: Props) {
                         {traces.map((row, index) => (
                             <StyledTableRow key={index}>
                                 <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
-                                <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.message, 40, 140)}</StyledTableCell>
-                                <StyledTableCell align="left">{row.dt}</StyledTableCell>
-                                <StyledTableCell align="left">{row.username}</StyledTableCell>
-                                <StyledTableCell align="center">{row.ticks}</StyledTableCell>
+                                <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.message, 45, 180)}</StyledTableCell>
+                                <StyledTableCell align="center">{row.date}</StyledTableCell>
+                                <StyledTableCell align="center">{row.username}</StyledTableCell>
+                                <StyledTableCell align="center">{row.ticks ? row.ticks / 10000 : 0}</StyledTableCell>
                                 <StyledTableCell align="center">{row.sessionId}</StyledTableCell>
                             </StyledTableRow>
                         ))}
@@ -110,7 +104,7 @@ export default function TracesTable({ filter, updater }: Props) {
                             <TablePagination
                                 defaultValue={10}
                                 rowsPerPageOptions={[10, 25, 50]}
-                                colSpan={4}
+                                colSpan={6}
                                 count={totalAmount}
                                 rowsPerPage={pageSize}
                                 showFirstButton={true}

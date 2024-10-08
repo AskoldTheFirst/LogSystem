@@ -36,7 +36,7 @@ export default function Login() {
             })
                 .then(retValue => {
                     window.Tracer.trace('login end', retValue.login, dtNow);
-                    localStorage.setItem('user', JSON.stringify(retValue));
+                    localStorage.setItem(Helper.UserKey, JSON.stringify(retValue));
                     setUser && setUser(retValue);
                     navigate('/logs');
                 })

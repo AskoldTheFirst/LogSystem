@@ -6,12 +6,12 @@ import { GlobalContext } from "../../globalContext";
 
 
 export default function TraceFilterPanel() {
-  const { traceFilter, setTraceFilter } = useContext(GlobalContext)
+  const { traceFilter, setTraceFilter } = useContext(GlobalContext);
   const [messageTerm, setMessageTerm] = useState<string>(traceFilter.messageSearchTerm);
   const [userTerm, setUserTerm] = useState<string>(traceFilter.userSearchTerm);
   const [product, setProduct] = useState<number>(traceFilter.product);
 
-  const { user } = useContext(GlobalContext)
+  const { user } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   useEffect(() => {

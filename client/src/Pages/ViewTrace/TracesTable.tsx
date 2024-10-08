@@ -77,57 +77,55 @@ export default function TracesTable({ updater }: Props) {
     };
 
     return (
-        <>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="center" width='70px'>Product</StyledTableCell>
-                            <StyledTableCell align="left" width='220px'>Message</StyledTableCell>
-                            <StyledTableCell align="center" width='60px'>Date</StyledTableCell>
-                            <StyledTableCell align="center" width='70px'>User</StyledTableCell>
-                            <StyledTableCell align="center" width='80px'>Ticks, mls</StyledTableCell>
-                            <StyledTableCell align="center" width='80px'>SessionId</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {traces.map((row, index) => (
-                            <StyledTableRow key={index}>
-                                <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
-                                <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.message, 45, 180)}</StyledTableCell>
-                                <StyledTableCell align="center">{row.date}</StyledTableCell>
-                                <StyledTableCell align="center">{row.username}</StyledTableCell>
-                                <StyledTableCell align="center">{row.ticks ? row.ticks / 10000 : 0}</StyledTableCell>
-                                <StyledTableCell align="center">{row.sessionId}</StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                defaultValue={10}
-                                rowsPerPageOptions={[10, 25, 50]}
-                                colSpan={6}
-                                count={totalAmount}
-                                rowsPerPage={pageSize}
-                                showFirstButton={true}
-                                showLastButton={true}
-                                page={pageNumber - 1}
-                                slotProps={{
-                                    select: {
-                                        inputProps: {
-                                            'aria-label': 'rows per page',
-                                        },
-                                        native: true,
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 500 }} aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell align="center" width='70px'>Product</StyledTableCell>
+                        <StyledTableCell align="left" width='220px'>Message</StyledTableCell>
+                        <StyledTableCell align="center" width='60px'>Date</StyledTableCell>
+                        <StyledTableCell align="center" width='70px'>User</StyledTableCell>
+                        <StyledTableCell align="center" width='80px'>Ticks, mls</StyledTableCell>
+                        <StyledTableCell align="center" width='80px'>SessionId</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {traces.map((row, index) => (
+                        <StyledTableRow key={index}>
+                            <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
+                            <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.message, 45, 180)}</StyledTableCell>
+                            <StyledTableCell align="center">{row.date}</StyledTableCell>
+                            <StyledTableCell align="center">{row.username}</StyledTableCell>
+                            <StyledTableCell align="center">{row.ticks ? row.ticks / 10000 : 0}</StyledTableCell>
+                            <StyledTableCell align="center">{row.sessionId}</StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <TablePagination
+                            defaultValue={10}
+                            rowsPerPageOptions={[10, 25, 50]}
+                            colSpan={6}
+                            count={totalAmount}
+                            rowsPerPage={pageSize}
+                            showFirstButton={true}
+                            showLastButton={true}
+                            page={pageNumber - 1}
+                            slotProps={{
+                                select: {
+                                    inputProps: {
+                                        'aria-label': 'rows per page',
                                     },
-                                }}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                onPageChange={handleChangePage}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-        </>
+                                    native: true,
+                                },
+                            }}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                            onPageChange={handleChangePage}
+                        />
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </TableContainer>
     );
 }

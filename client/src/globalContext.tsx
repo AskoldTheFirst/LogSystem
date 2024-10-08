@@ -18,12 +18,12 @@ export const GlobalContextProvider = (props: any) => {
     useEffect(() => {
         http.Account.currentUser().then(userDto => {
             if (userDto) {
-                localStorage.setItem('user', JSON.stringify(userDto));
+                localStorage.setItem(Helper.UserKey, JSON.stringify(userDto));
                 setUser(userDto);
             }
             else {
                 setUser(null);
-                localStorage.removeItem('user');
+                localStorage.removeItem(Helper.UserKey);
             }
         });
     }, []);

@@ -1,10 +1,10 @@
-
 import { LoadingButton } from "@mui/lab";
 import { Box, FormControl, FormLabel, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import http from "../../Biz/http";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../globalContext";
+import { Helper } from "../../Biz/Helper";
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');
@@ -36,7 +36,7 @@ export default function Login() {
             })
                 .then(retValue => {
                     window.Tracer.traceAdv('login end', retValue.login, dtNow);
-                    localStorage.setItem('user', JSON.stringify(retValue));
+                    localStorage.setItem(Helper.UserKey, JSON.stringify(retValue));
                     setUser && setUser(retValue);
                     navigate('/logs');
                 })

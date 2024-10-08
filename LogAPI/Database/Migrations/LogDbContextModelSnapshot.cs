@@ -123,6 +123,8 @@ namespace LogAPI.Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Date");
+
                     b.HasIndex("Username");
 
                     b.ToTable("Traces");
@@ -222,13 +224,13 @@ namespace LogAPI.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c5334d31-59fc-4d2e-aaa9-ad1469b1c5b7",
+                            Id = "4c307430-be94-4956-b31e-7d2b04435798",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "fde2729c-0bfe-44e8-ae16-29cc71f60255",
+                            Id = "3bdbdd20-6a7b-47e2-b904-7455a342e2f0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

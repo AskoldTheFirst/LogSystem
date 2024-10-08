@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using LogAPI.Controllers;
 using LogAPI.Database;
 using Microsoft.AspNetCore.Identity;
 using LogAPI.Services;
 using LogAPI.Database.Entities;
 using LogAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using LogClient;
-using LogClient.Types;
 
 namespace LogAPI.Controllers
 {

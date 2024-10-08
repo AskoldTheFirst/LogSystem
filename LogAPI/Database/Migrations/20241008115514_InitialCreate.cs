@@ -211,8 +211,8 @@ namespace LogAPI.Database.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "c5334d31-59fc-4d2e-aaa9-ad1469b1c5b7", null, "Member", "MEMBER" },
-                    { "fde2729c-0bfe-44e8-ae16-29cc71f60255", null, "Admin", "ADMIN" }
+                    { "3bdbdd20-6a7b-47e2-b904-7455a342e2f0", null, "Admin", "ADMIN" },
+                    { "4c307430-be94-4956-b31e-7d2b04435798", null, "Member", "MEMBER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -258,6 +258,11 @@ namespace LogAPI.Database.Migrations
                 name: "IX_Logs_Username",
                 table: "Logs",
                 column: "Username");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Traces_Date",
+                table: "Traces",
+                column: "Date");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Traces_Username",

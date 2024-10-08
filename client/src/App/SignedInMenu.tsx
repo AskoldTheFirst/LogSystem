@@ -2,6 +2,7 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../globalContext";
+import { Helper } from "../Biz/Helper";
 
 export default function SignedInMenu() {
     const { user, setUser } = useContext(GlobalContext)
@@ -31,7 +32,7 @@ export default function SignedInMenu() {
                 onClose={handleClose}
             >
                 <MenuItem onClick={() => {
-                    localStorage.removeItem('user');
+                    localStorage.removeItem(Helper.UserKey);
                     setUser && setUser(null);
                     handleClose();
                     navigate('/login');

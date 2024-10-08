@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { router } from "../App/Routes";
 import { toast } from "react-toastify";
+import { Helper } from "./Helper";
 
 //axios.defaults.baseURL = 'http://localhost:5009/api/';
 //axios.defaults.baseURL = 'http://askold-001-site1.ltempurl.com/api/';
@@ -10,12 +11,9 @@ axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.request.use(config => {
-    const storageUser = localStorage.getItem('user');
+    const storageUser = Helper.GetCurrentUser();
     if (storageUser)
-    {
-        const userDto = JSON.parse(storageUser);
-        config.headers.Authorization = `Bearer ${userDto.token}`;
-    }
+        config.headers.Authorization = `Bearer ${storageUser.token}`;
     
     return config;
 });
@@ -48,11 +46,11 @@ const requests = {
 }
 
 const Log = {
-    page: (filter: any) => requests.get(`log`, filter),
+    page: (filter: any) => requests.get('log', filter),
 }
 
 const Trace = {
-    page: (filter: any) => requests.get(`trace`, filter),
+    page: (filter: any) => requests.get('trace', filter),
 }
 
 const Account = {
@@ -62,8 +60,8 @@ const Account = {
 }
 
 const App = {
-    logger: () => requests.get(`app/logger`),
-    tracer: () => requests.get(`app/tracer`),
+    logger: () => requests.get('app/logger'),
+    tracer: () => requests.get('app/tracer'),
 }
 
 const http = {

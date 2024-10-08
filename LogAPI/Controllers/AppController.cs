@@ -1,12 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using LogAPI.Database;
-using LogAPI.DTOs;
-using LogAPI.Database.Entities;
-using Microsoft.EntityFrameworkCore;
-using LogAPI.Types;
-using Microsoft.AspNetCore.Authorization;
 using LogClient;
-using LogClient.Types;
 
 namespace LogAPI.Controllers
 {

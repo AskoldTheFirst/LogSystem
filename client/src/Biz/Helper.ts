@@ -37,11 +37,15 @@ export class Helper {
     }
 
     static GetCurrentUser(): UserDto | null {
-        const stringUser = localStorage.getItem('user');
+        const stringUser = localStorage.getItem(this.UserKey);
         if (stringUser) {
             return JSON.parse(stringUser);
         }
     
         return null;
+    }
+
+    static get UserKey() : string {
+        return 'user';
     }
 }

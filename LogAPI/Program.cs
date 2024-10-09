@@ -61,11 +61,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
 
-builder.Services.AddSingleton<LogClient.ILogger>(
-    new WebLogger("http://localhost:5009", Product.LogSystem, LayerType.BackEnd));
+string host = null;
+#if DEBUG
+    host = builder.Configuration["DevLogHost"];
+#else
+    host = builder.Configuration["ProdLogHost"];
+#endif
 
-builder.Services.AddSingleton<LogClient.ITracer>(
-    new WebTracer("http://localhost:5009", Product.LogSystem));
+builder.Services.AddSingleton<LogClient.ILogger>(new WebLogger(host, Product.LogSystem, LayerType.BackEnd));
+builder.Services.AddSingleton<LogClient.ITracer>(new WebTracer(host, Product.LogSystem));
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
@@ -80,17 +84,20 @@ if (app.Environment.IsDevelopment())
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials()
-        .WithOrigins([
-            "http://localhost:3006",
-            "http://127.0.0.1:3006",
-            "http://localhost:3004",
-            "http://127.0.0.1:3004",
-            "http://askold-001-site2.atempurl.com",
-            "http://askold-001-site3.atempurl.com",
-            "http://askold-001-site4.atempurl.com",
-        ]);
+       .AllowAnyMethod()
+       .AllowCredentials()
+       .WithOrigins([
+           "http://localhost:3006",
+           "http://127.0.0.1:3006",
+           "http://localhost:3004",
+           "http://127.0.0.1:3004",
+           "http://askold-001-site1.atempurl.com",
+           "http://askold-001-site2.atempurl.com",
+           "http://askold-001-site3.atempurl.com",
+           "http://askold-001-site4.atempurl.com",
+           "http://logsystem-001-site1.ltempurl.com",
+           "http://logsystem-001-site2.ltempurl.com"
+       ]);
 });
 
 app.UseHttpsRedirection();

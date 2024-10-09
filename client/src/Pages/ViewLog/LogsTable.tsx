@@ -111,7 +111,7 @@ export default function LogsTable({ updater }: Props) {
                                 <StyledTableCell align="center">{ProductToString(row.product)}</StyledTableCell>
                                 <StyledTableCell align="center">{SeverityToString(row.severity)}</StyledTableCell>
                                 <StyledTableCell align="center">{Helper.AdaptTextToRowLenthLimit(row.message, 20, 100)}</StyledTableCell>
-                                <StyledTableCell align="center">{row.dt}</StyledTableCell>
+                                <StyledTableCell align="center">{row.date}</StyledTableCell>
                                 <StyledTableCell align="center">{row.username}</StyledTableCell>
                                 <StyledTableCell align="center">{LayerToString(row.layerType)}</StyledTableCell>
                                 <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.exception, 28, exceptionTextLength)}</StyledTableCell>

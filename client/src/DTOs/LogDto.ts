@@ -5,7 +5,7 @@ import { Severity } from "../Biz/Types/Severity";
 export interface LogDto  {
     product: Products;
     severity: Severity;
-    dt: string;
+    date: string;
     message: string;
     username?: string;
     requestCtx: string;

@@ -46,6 +46,6 @@ export class Helper {
     }
 
     static get UserKey() : string {
-        return 'user';
+        return 'log-user';
     }
 }

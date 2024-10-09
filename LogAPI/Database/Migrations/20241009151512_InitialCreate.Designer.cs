@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogAPI.Database.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    [Migration("20241008115514_InitialCreate")]
+    [Migration("20241009151512_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -97,7 +97,9 @@ namespace LogAPI.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -125,8 +127,6 @@ namespace LogAPI.Database.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Date");
 
                     b.HasIndex("Username");
 
@@ -227,13 +227,13 @@ namespace LogAPI.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4c307430-be94-4956-b31e-7d2b04435798",
+                            Id = "def4e07d-52b2-4f66-8965-1b7a01935bc4",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "3bdbdd20-6a7b-47e2-b904-7455a342e2f0",
+                            Id = "c98eb4dc-15b7-46c7-a9c5-86a1642e4392",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

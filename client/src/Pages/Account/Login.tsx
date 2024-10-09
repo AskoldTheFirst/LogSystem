@@ -5,6 +5,7 @@ import http from "../../Biz/http";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../globalContext";
 import { Helper } from "../../Biz/Helper";
+import { toast } from "react-toastify";
 
 export default function Login() {
     const [login, setLogin] = useState<string>('');
@@ -35,12 +36,23 @@ export default function Login() {
                 password: password
             })
                 .then(retValue => {
+                    toast.success('You are successfully logged in.');
                     window.Tracer.traceAdv('login end', retValue.login, dtNow);
                     localStorage.setItem(Helper.UserKey, JSON.stringify(retValue));
                     setUser && setUser(retValue);
                     navigate('/logs');
                 })
-                .catch(error => window.Logger.log(error, user?.login))
+                .catch(error => {
+                    window.Logger.log(error, user?.login);
+                    if (error.status === 401)
+                    {
+                        toast.error('Login or password is not correct.');
+                    }
+                    else
+                    {
+                        toast.error('There is some network issue. Please try again later.');
+                    }
+                })
                 .finally(() => setLoading(false));
         }
     }

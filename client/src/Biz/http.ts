@@ -21,16 +21,16 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
     return response;
 }, /*not 2xx responce range*/ (error: AxiosError) => {
-    const { data, status } = error.response as AxiosResponse;
+    const { status } = error.response as AxiosResponse;
     
     switch (status) {
         case 400:
         case 401:
         case 404:
-            toast.error(data?.title);
+            //toast.error('data?.title');
             break;
         case 500:
-            router.navigate('/server-error', { state: { error: data } });
+            //router.navigate('/server-error', { state: { error: data } });
             break;
         default:
             break;

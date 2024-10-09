@@ -88,7 +88,7 @@ namespace LogAPI.Database.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Ticks = table.Column<long>(type: "bigint", nullable: true),
                     SessionId = table.Column<long>(type: "bigint", nullable: true),
                     Tag1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -211,8 +211,8 @@ namespace LogAPI.Database.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3bdbdd20-6a7b-47e2-b904-7455a342e2f0", null, "Admin", "ADMIN" },
-                    { "4c307430-be94-4956-b31e-7d2b04435798", null, "Member", "MEMBER" }
+                    { "c98eb4dc-15b7-46c7-a9c5-86a1642e4392", null, "Admin", "ADMIN" },
+                    { "def4e07d-52b2-4f66-8965-1b7a01935bc4", null, "Member", "MEMBER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -258,11 +258,6 @@ namespace LogAPI.Database.Migrations
                 name: "IX_Logs_Username",
                 table: "Logs",
                 column: "Username");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Traces_Date",
-                table: "Traces",
-                column: "Date");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Traces_Username",

@@ -5,6 +5,7 @@ import { LogFilter } from "./Biz/Types/LogFilter";
 import { TraceFilter } from "./Biz/Types/TraceFilter";
 import { Helper } from "./Biz/Helper";
 import { AppState, DefaultAppState } from "./Biz/Types/AppState";
+import { router } from "./App/Routes";
 
 export const GlobalContext = createContext<AppState>(DefaultAppState());
 
@@ -21,12 +22,16 @@ export const GlobalContextProvider = (props: any) => {
                 localStorage.setItem(Helper.UserKey, JSON.stringify(userDto));
                 setUser(userDto);
             }
-            else {
-                setUser(null);
-                localStorage.removeItem(Helper.UserKey);
-            }
+        }).catch(() => {
+            signOut();
+            router.navigate('/login');
         });
     }, []);
+
+    const signOut = () => {
+        setUser(null);
+        localStorage.removeItem(Helper.UserKey);
+    }
 
     const value: AppState = {
         user: user,
@@ -35,6 +40,7 @@ export const GlobalContextProvider = (props: any) => {
         setLogFilter: setLogFilter,
         traceFilter: traceFilter,
         setTraceFilter: setTraceFilter,
+        signOut: signOut
     };
 
     return (

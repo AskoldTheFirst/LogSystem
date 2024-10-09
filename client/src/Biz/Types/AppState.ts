@@ -12,6 +12,7 @@ export interface AppState {
     setLogFilter: (log: LogFilter) => void;
     traceFilter: TraceFilter;
     setTraceFilter: (log: TraceFilter) => void;
+    signOut: () => void;
 }
 
 export function DefaultAppState() : AppState {
@@ -24,7 +25,7 @@ export function DefaultAppState() : AppState {
             userSearchTerm: '',
             product: Products.All,
             severity: Severity.All,
-            layerType: LayerType.All
+            layerType: LayerType.All,
         },
         setLogFilter: (log: LogFilter) => log,
 
@@ -34,5 +35,6 @@ export function DefaultAppState() : AppState {
             product: Products.All,
         },
         setTraceFilter: (trace: TraceFilter) => trace,
+        signOut: () => {},
     };
 }

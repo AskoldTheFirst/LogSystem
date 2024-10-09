@@ -7,13 +7,12 @@ import '@fontsource/roboto/700.css';
 import './index.css'
 import { RouterProvider } from 'react-router-dom';
 import { router } from './App/Routes.tsx';
-import { StrictMode } from 'react';
 import { GlobalContextProvider } from './globalContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  //<StrictMode>
     <GlobalContextProvider>
       <RouterProvider router={router} />
     </GlobalContextProvider>
-  </StrictMode>
+  //</StrictMode>
 )

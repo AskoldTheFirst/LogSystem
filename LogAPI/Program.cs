@@ -93,10 +93,9 @@ app.UseCors(opt =>
            "http://127.0.0.1:3004",
            "http://askold-001-site1.atempurl.com",
            "http://askold-001-site2.atempurl.com",
-           "http://askold-001-site3.atempurl.com",
-           "http://askold-001-site4.atempurl.com",
-           "http://logsystem-001-site1.ltempurl.com",
-           "http://logsystem-001-site2.ltempurl.com"
+           "http://quiz-it.online",
+           "http://logsystem-001-site2.atempurl.com",
+           "http://logview.online"
        ]);
 });
 

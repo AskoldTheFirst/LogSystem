@@ -17,15 +17,17 @@ export const GlobalContextProvider = (props: any) => {
     const [traceFilter, setTraceFilter] = useState<TraceFilter>(defaultAppState.traceFilter);
 
     useEffect(() => {
-        http.Account.currentUser().then(userDto => {
-            if (userDto) {
-                localStorage.setItem(Helper.UserKey, JSON.stringify(userDto));
-                setUser(userDto);
-            }
-        }).catch(() => {
-            signOut();
-            router.navigate('/login');
-        });
+        if (localStorage.getItem(Helper.UserKey)) {
+            http.Account.currentUser().then(userDto => {
+                if (userDto) {
+                    localStorage.setItem(Helper.UserKey, JSON.stringify(userDto));
+                    setUser(userDto);
+                }
+            }).catch(() => {
+                signOut();
+                router.navigate('/login');
+            });
+        }
     }, []);
 
     const signOut = () => {

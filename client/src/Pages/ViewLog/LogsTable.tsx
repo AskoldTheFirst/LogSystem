@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TableFooter, TablePagination } from '@mui/material';
+import { Box, Button, Modal, TableFooter, TablePagination, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { LogPageFilterParamsDto } from '../../DTOs/LogPageFilterParamsDto';
 import { LogDto } from '../../DTOs/LogDto';
@@ -16,9 +16,19 @@ import { ProductToString } from '../../Biz/Types/Products';
 import { SeverityToString } from '../../Biz/Types/Severity';
 import { LayerToString } from '../../Biz/Types/LayerType';
 import { Helper } from '../../Biz/Helper';
-import Modal from '../../Modal/modal';
-import useModal from '../../Hooks/useModal';
 import { GlobalContext } from '../../globalContext';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 interface Props {
     updater: boolean;
@@ -87,7 +97,9 @@ export default function LogsTable({ updater }: Props) {
         setPageSize(parseInt(event.target.value, 10));
     };
 
-    const { isOpen, openModal, closeModal } = useModal();
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     return (
         <>
@@ -116,12 +128,24 @@ export default function LogsTable({ updater }: Props) {
                                 <StyledTableCell align="center">{LayerToString(row.layerType)}</StyledTableCell>
                                 <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.exception, 28, exceptionTextLength)}</StyledTableCell>
                                 <StyledTableCell align="center"><div>
-                                    <button disabled={row.exception === undefined || row.exception?.length < exceptionTextLength} onClick={openModal}>View</button>
-                                    <Modal isOpen={isOpen} closeModal={closeModal}>
-                                        <h2>Exception details:</h2>
-                                        <p>{row.exception}</p>
-                                        <button onClick={closeModal}>Закрыть</button>
+                                    {<button disabled={row.exception === undefined || row.exception?.length < exceptionTextLength} onClick={handleOpen}>View</button>}
+                                    <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style}>
+                                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                                Exception details:
+                                            </Typography>
+                                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                                {row.exception}
+                                            </Typography>
+                                            <Button sx={{ float: 'inline-end', marginRight: 6, marginTop: 2 }} onClick={handleClose}>Close</Button>
+                                        </Box>
                                     </Modal>
+
                                 </div></StyledTableCell>
                             </StyledTableRow>
                         ))}

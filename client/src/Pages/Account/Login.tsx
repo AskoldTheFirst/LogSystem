@@ -43,7 +43,7 @@ export default function Login() {
                     navigate('/logs');
                 })
                 .catch(error => {
-                    window.Logger.log(error, user?.login);
+                    window.Logger.log(error, user?.login, dtNow);
                     if (error.status === 401)
                     {
                         toast.error('Login or password is not correct.');

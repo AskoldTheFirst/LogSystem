@@ -6,8 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Modal, TableFooter, TablePagination, Typography } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TableFooter, TablePagination } from '@mui/material';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { LogPageFilterParamsDto } from '../../DTOs/LogPageFilterParamsDto';
 import { LogDto } from '../../DTOs/LogDto';
 import http from '../../Biz/http';
@@ -17,18 +17,6 @@ import { SeverityToString } from '../../Biz/Types/Severity';
 import { LayerToString } from '../../Biz/Types/LayerType';
 import { Helper } from '../../Biz/Helper';
 import { GlobalContext } from '../../globalContext';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 
 interface Props {
     updater: boolean;
@@ -58,6 +46,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function LogsTable({ updater }: Props) {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const { logFilter } = useContext(GlobalContext)
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
@@ -82,7 +73,14 @@ export default function LogsTable({ updater }: Props) {
                 setTotalAmount(pageData.total);
             });
 
-    }, [logFilter, pageNumber, pageSize, updater]);
+        if (open) {
+            const { current: descriptionElement } = descriptionElementRef;
+            if (descriptionElement !== null) {
+                descriptionElement.focus();
+            }
+        }
+
+    }, [logFilter, pageNumber, pageSize, updater, open]);
 
     const handleChangePage = (
         _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -97,9 +95,7 @@ export default function LogsTable({ updater }: Props) {
         setPageSize(parseInt(event.target.value, 10));
     };
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const descriptionElementRef = useRef<HTMLElement>(null);
 
     return (
         <>
@@ -127,26 +123,32 @@ export default function LogsTable({ updater }: Props) {
                                 <StyledTableCell align="center">{row.username}</StyledTableCell>
                                 <StyledTableCell align="center">{LayerToString(row.layerType)}</StyledTableCell>
                                 <StyledTableCell align="left">{Helper.AdaptTextToRowLenthLimit(row.exception, 28, exceptionTextLength)}</StyledTableCell>
-                                <StyledTableCell align="center"><div>
-                                    {<button disabled={row.exception === undefined || row.exception?.length < exceptionTextLength} onClick={handleOpen}>View</button>}
-                                    <Modal
-                                        open={open}
-                                        onClose={handleClose}
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                    >
-                                        <Box sx={style}>
-                                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                                Exception details:
-                                            </Typography>
-                                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                                {row.exception}
-                                            </Typography>
-                                            <Button sx={{ float: 'inline-end', marginRight: 6, marginTop: 2 }} onClick={handleClose}>Close</Button>
-                                        </Box>
-                                    </Modal>
-
-                                </div></StyledTableCell>
+                                <StyledTableCell align="center">
+                                    <div>
+                                        {<button disabled={row.exception === undefined || row.exception?.length < exceptionTextLength} onClick={handleOpen}>View</button>}
+                                        <Dialog
+                                            open={open}
+                                            onClose={handleClose}
+                                            scroll='paper'
+                                            aria-labelledby="scroll-dialog-title"
+                                            aria-describedby="scroll-dialog-description"
+                                        >
+                                            <DialogTitle id="scroll-dialog-title">Exception:</DialogTitle>
+                                            <DialogContent dividers={true}>
+                                                <DialogContentText
+                                                    id="scroll-dialog-description"
+                                                    ref={descriptionElementRef}
+                                                    tabIndex={-1}
+                                                >
+                                                    {row.exception}
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button sx={{marginRight: 3}} onClick={handleClose}>Close</Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </div>
+                                </StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

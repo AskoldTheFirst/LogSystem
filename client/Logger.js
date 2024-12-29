@@ -1,7 +1,7 @@
 function WebLogger() {
 
     // private:
-     const _host_name = 'http://logsystem-001-site1.atempurl.com';
+     const _host_name = 'http://46.238.2.128:83';
     //const _host_name = 'http://localhost:5009';
     const _prod_id = 4;
     const _layer = 1; // front-end
@@ -35,7 +35,7 @@ function WebLogger() {
   function WebTracer() {
   
       // private:
-      const _host_name = 'http://logsystem-001-site1.atempurl.com';
+      const _host_name = 'http://46.238.2.128:83';
       //const _host_name = 'http://localhost:5009';
       const _prod_id = 4;
   

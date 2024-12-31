@@ -98,8 +98,6 @@ app.UseCors(opt =>
            "http://logview.online",
            "http://46.238.2.128:82",
            "http://46.238.2.128:84",
-           "http://localhost:82",
-           "http://localhost:84",
        ]);
 });
 
